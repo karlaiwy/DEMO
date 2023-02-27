@@ -1,0 +1,186 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-03 21:08:37
+ * @LastEditTime: 2022-01-04 19:27:32
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220103/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播图  正常版  自动切换</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap {
+      position: relative;
+      margin: 50px auto;
+      width: 500px;
+      height: 300px;
+      box-shadow: 0 0 8px 2px #333;
+    }
+
+    .wrap img {
+      width: 500px;
+      height: 300px;
+    }
+
+    .wrap .picList {
+      list-style: none;
+    }
+
+    .wrap li {
+      display: none;
+    }
+
+    .wrap li.on {
+      display: block;
+    }
+
+    .wrap .btn {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 30px;
+      height: 80px;
+      color: #fff;
+      text-align: center;
+      line-height: 80px;
+      font-size: 36px;
+      background-color: rgba(0, 0, 0, .5);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .wrap .btn:hover {
+      opacity: .8;
+      color:orange;
+    }
+
+    .wrap .prev {
+      left: 2px;
+    }
+    .wrap .next {
+      right: 2px;
+    }
+
+    .slider {
+      display: flex;
+      justify-content: space-evenly;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+    }
+    .slider span {
+      width: 25px;
+      height: 25px;
+      color: #fff;
+      text-align: center;
+      line-height: 25px;
+      font-size: 16px;
+      font-weight: 700;
+      background-color: orange;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .slider span.active {
+      background-color: rgb(108, 216, 144);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="btn prev">&lt;</span>
+    <span class="btn next">&gt;</span>
+    <ul class="picList">
+      <li class="on"><img src="images/h1.jpg" alt="pic"></li>
+      <li><img src="images/h2.jpg" alt="pic"></li>
+      <li><img src="images/m1.jpg" alt="pic"></li>
+      <li><img src="images/m2.jpg" alt="pic"></li>
+      <li><img src="images/p1.jpg" alt="pic"></li>
+      <li><img src="images/p2.jpg" alt="pic"></li>
+      <li><img src="images/p3.jpg" alt="pic"></li>
+      <li><img src="images/p4.jpg" alt="pic"></li>
+    </ul>
+    <div class="slider">
+
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var oPicList = $('.picList'),
+        oSlider = $('.slider'),
+        oBtnPrev = $('.prev'),
+        oBtnNext = $('.next');
+        
+    var len = oPicList.children.length;
+    var sliderIdx = 0;
+
+    function creatEle(){
+      var fragament = document.createDocumentFragment();
+      for(var i = 0; i < len; i++){
+        var vDom = document.createElement('span');
+        vDom.innerHTML = i+1;
+        fragament.appendChild(vDom);
+      }
+      oSlider.append(fragament);
+    }
+    creatEle();
+
+    oSlider.children[0].classList.add('active');
+
+    function changeSlider(callback){
+      oPicList.children[sliderIdx].classList.remove('on');
+      oSlider.children[sliderIdx].classList.remove('active');
+      callback && callback();
+      oPicList.children[sliderIdx].classList.add('on');
+      oSlider.children[sliderIdx].classList.add('active');
+    }
+
+    oBtnPrev.addEventListener('click',function (){
+      changeSlider(function(){
+        sliderIdx--;
+      sliderIdx = (sliderIdx + len) % len;
+      });     
+    },false);
+
+    oBtnNext.addEventListener('click',function (){
+      changeSlider(function(){
+        sliderIdx++;
+        sliderIdx %= len;
+      });
+    },false);
+
+    oSlider.addEventListener('mouseover',function mouseOver(e){
+      if(e.target.tagName.toLowerCase() === 'span'){
+        changeSlider(function(){
+          sliderIdx = e.target.innerHTML-1;
+      });
+      }
+    },false);
+
+
+    function autoChange(){
+      setTimeout(function fn(){
+        oPicList.children[sliderIdx].classList.remove('on');
+        oSlider.children[sliderIdx].classList.remove('active');
+        sliderIdx++;
+        sliderIdx %= len;
+        oPicList.children[sliderIdx].classList.add('on');
+        oSlider.children[sliderIdx].classList.add('active');
+        setTimeout(fn,3000);
+      },1000);
+    }
+
+    autoChange();
+  </script>
+</body>
+</html>

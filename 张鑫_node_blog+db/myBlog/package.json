@@ -1,0 +1,45 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "iscroll": "^5.2.0",
+    "jquery": "^3.6.1",
+    "jsencrypt": "^3.2.1",
+    "qs": "^6.11.0",
+    "sme-router": "^0.12.8",
+    "store": "^2.0.12"
+  },
+  "name": "myblog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile-styl": "stylus -w ./src/styl -o ./assets/css",
+    "compile-hbs": "node ./script/execHbs.js",
+    "build": "npx webpack --config ./config/webpack.prod.js",
+    "dev": "npx webpack --config ./config/webpack.dev.js",
+    "start": "webpack serve --config ./config/webpack.dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.1",
+    "echarts": "^5.4.0",
+    "file-loader": "^6.2.0",
+    "handlebars": "^4.7.7",
+    "handlebars-loader": "^1.7.2",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "stylus": "^0.59.0",
+    "stylus-loader": "^7.0.0",
+    "uglify-js": "^3.17.2",
+    "wangeditor": "^4.5.2",
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.6.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-merge": "^5.8.0"
+  }
+}

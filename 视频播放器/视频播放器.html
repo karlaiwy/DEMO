@@ -1,0 +1,463 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-24 22:27:01
+ * @LastEditTime: 2022-03-25 21:23:55
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_20220324/case01.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @font-face {
+      font-family: 'iconfont';
+      src: url('font/iconfont.ttf?t=1648172096727') format('truetype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .icon {
+      font-family: "iconfont"!important;
+      font-size: 35px;
+      cursor: pointer;
+    }
+    .icon:hover {
+      color:rgb(137, 222, 235);
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: stretch;
+      margin: 50px auto 0;
+      width:  600px;
+    }
+
+    .wrap:hover .progress {
+      display: block;
+    }
+    .wrap:hover .controls {
+      visibility: visible;
+    }
+
+    .progress {
+      position: relative;
+      width: 100%;
+      height: 6px;
+      background-color: rgb(222, 213, 215);
+    }
+    .progress:hover .progress-unit{
+      display: block;
+    }
+
+    .progress .time {
+      position: absolute;
+      top: 3px;
+      right: 5px;
+    }
+
+    .progress .progress-content {
+      position: absolute;
+      height: 100%;
+      background-color: rgb(137, 222, 235);
+    }
+
+    .progress-content   .progress-unit {
+      display: none;
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: blue;
+      cursor: pointer;
+    }
+
+    .controls {
+      /* visibility: hidden; */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      height: 60px;
+      line-height: 70px;
+      background-color: rgba(122,122,122,.1);
+    }
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 400px;
+    }
+
+    .controls-volume {
+      position: relative;
+    }
+
+    .controls-volume:hover .progress-volume {
+      display: block;
+    }
+
+    .controls-volume .progress-volume {
+      display: none;
+      position: absolute;
+      top: -90px;
+      left: 14px;
+      width: 6px;
+      height: 100px;
+      border-radius: 4px;
+      background-color: grey;
+    }
+    .progress-volume .progress-volume-content {
+      position: absolute;
+      bottom: 0;
+      width: inherit;
+      height: 30px;
+      border-radius: 4px;
+      background-color: blue;
+    }
+
+    .progress-volume-content .progress-volume-unit {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: blue;
+      cursor: pointer;
+    }
+
+    .commentBox {
+      display: none;
+      width: 600px;
+      margin: 10px auto;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 600px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    
+    .comment-content-box {
+      width: 600px;
+      margin: 10px auto;
+    }
+
+    .comment-content-box :nth-child(odd)  {
+      background-color: #facc;
+    }
+    .comment-content-box :nth-child(even) {
+      background-color: #ccc;
+    }
+
+    .controls-volume {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .time {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="video">
+      <video src="video/mp4.mp4" width="600"></video>
+    </div>
+    <div class="progress">
+      <div class="time">
+        <span class="curr-time">00:00:00</span>/
+        <span class="count-time">00:00:00</span>
+      </div>
+      <div class="progress-content">
+        <div class="progress-unit"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="controls-play icon" >&#xe72f;</div>
+      <div class="controls-btnBox">
+        <ul class="list">
+          <li class="controls-like icon">&#xe79d;</li>
+          <li class="controls-muted icon">&#xe767;</li>
+          <li class="controls-volume icon">
+            <div class="progress-volume">
+              <div class="progress-volume-content">
+                <div class="progress-volume-unit"></div>
+              </div>
+            </div>
+            &#xe774;
+          </li>
+          <li class="controls-comment icon">&#xe7b2;</li>
+          <li class="controls-loop icon">&#xe772;</li>
+          <li class="controls-full icon">&#xea7d;</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="comment-content-box"></div>
+  <div class="commentBox">
+    <input type="textarea" class="comment-content">
+    <input type="button" class="comment-submit" value="评论">
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    const video = $('video'),
+          playBtn = $('.controls-play'),
+          likeBtn = $('.controls-like'),
+          mutedBtn = $('.controls-muted'),
+          volumeBtn = $('.controls-volume'),
+          commentBtn = $('.controls-comment'),
+          loopBtn = $('.controls-loop'),
+          fullBtn = $('.controls-full');
+    const comment_box = $('.commentBox'),
+          comment_content = $('.comment-content'),
+          comment_submit = $('.comment-submit'),
+          comment_contentBox = $('.comment-content-box');
+    const volumeControl = $('.progress-volume-unit'),
+          volumeContent = $('.progress-volume-content');
+    const $count_time = $('.count-time'),
+          $curr_time = $('.curr-time');
+    const proBtn = $('.progress-unit'),
+          proCont = $('.progress-content');
+    const player = $('video');
+    playBtn.onclick = function(){
+      if(video.paused){
+        myPlay();
+        playBtn.innerHTML = '&#xe738;';
+      } else {
+        myPause()
+        playBtn.innerHTML = '&#xe72f;'
+      }
+    }
+
+    function myPlay(){
+      player.play();
+    }
+    function myPause(){
+      player.pause();
+    }
+
+    let num_like = 0;
+    likeBtn.onclick = function(){
+      if(num_like % 2 === 0){
+        this.innerHTML = '&#xe79e';
+        num_like++;
+      } else {
+        this.innerHTML = '&#xe79d';
+        num_like++;
+      }
+    }
+
+    let num_muted = 0;
+    mutedBtn.onclick = function(){
+      if(num_muted % 2 === 0){
+        this.innerHTML = '&#xe766;';
+        video.muted = true;
+        num_muted++;
+      } else {
+        this.innerHTML = '&#xe767;';
+        video.muted = false;
+        num_muted++;
+      }
+    }
+
+    commentBtn.onclick = function(){
+      comment_box.style.display = 'block';
+    }
+
+    comment_submit.onclick = function(){
+      let content = comment_content.value;
+      let vDom = document.createElement('div');
+      vDom.innerHTML = content + `<span>${dateTime()}</span>`;
+      vDom.classList.add('content');
+      comment_contentBox.append(vDom);
+      comment_content.value = '';
+      comment_box.style.display = 'none'; 
+    }
+
+    function dateTime(){
+      let year = new Date().getFullYear(),
+          month = new Date().getMonth(),
+          day = new Date().getDay();
+          date = new Date().getDate();
+      return `${year}.${month}.${date} 周${day}`;
+    }
+
+    loopBtn.onclick = function(){
+      video.setAttribute('loop','loop');
+    }
+
+    let num_full = 0;
+    fullBtn.onclick = function(){
+      if(num_full % 2 === 0){
+        this.innerHTML = '&#xeb10;';
+        num_full++;
+        // video.width = '100%';
+        // video.height = 'auto';
+      } else {
+        this.innerHTML = '&#xea7d;';
+        num_full++;
+      }
+    }
+    
+    // 控制音量
+    let isDown_volume = false;
+    let volumeEventMap = {
+      startY:0,
+      // startTop:0,
+      startHeight:0,
+      'mousedown': function(e){
+        isDown_volume = true;
+        startY = e.clientY;
+        // startTop = volumeControl.offsetTop;
+        startHeight = volumeContent.offsetHeight;
+      },
+      'mousemove': function(e){
+        if (isDown_volume){
+          let _y = Math.min(($('.progress-volume').offsetHeight-startHeight),(startY - e.clientY));
+          // volumeControl.style.top = startTop + _y + 'px';
+          // 按钮是定位在音量的顶端,按钮不需要改变定位
+          volumeContent.style.height = startHeight + _y + 'px';
+          let volume = volumeContent.offsetHeight;
+          video.volume = volume/100;
+        }
+      },
+      'mouseup': function(e){
+        if(!isDown_volume) {
+          return false;
+        } 
+        isDown_volume = false;
+      }
+    }
+
+    function volume_drag(e){
+      if(volumeEventMap[e.type] && typeof volumeEventMap[e.type] === 'function'){
+        volumeEventMap[e.type](e);
+      }
+    }
+
+    volumeControl.addEventListener('mousedown',volume_drag,false);
+    document.addEventListener('mousemove',volume_drag,false);
+    document.addEventListener('mouseup',volume_drag,false);
+
+    // 控制播放进度
+
+    // 获取视频总时长
+   
+    let countTime;
+    let currentTime;
+    player.onloadedmetadata = function(){
+      setCountTime();
+    };
+
+    
+    function setCountTime(){
+      countTime = ~~(player.duration);
+      $count_time.innerText = formatTime(countTime);
+    }
+
+    function setCurrentTime(time){
+      $curr_time.innerText = formatTime(time);
+      player.currentTime = time;
+    }
+
+    function getCurrentTime(){
+      return currentTime = ~~(player.currentTime);
+    }
+
+    player.addEventListener('timeupdate',function(){
+      let curr = getCurrentTime();
+      let ratio = curr / countTime;
+      let _x = ratio * $('.progress').offsetWidth;
+      proCont.style.width =  _x + 'px';
+      $curr_time.innerText = formatTime(curr);
+    },false);
+    // fromatTime(time) {
+    //     let [s, m, h] = [~~(time % 60), ~~(time / 60), ~~(time / 3600)];
+    //     [s, m, h] = [s, m, h].map(padLeft);
+    //     return `${h}:${m}:${s}`;
+    // }
+    function formatTime(time){
+      // let h = ~~(time/3600),
+      //     m = ~~(time/60),
+      //     s = time % 60;
+      let [h,m,s] = [~~(time/3600),~~(time/60),time % 60];
+      [h,m,s] = [h,m,s].map(item => padLeft(item));
+      return `${h}:${m}:${s}`;
+    }
+
+    function padLeft(num){
+      return String(num)[1] ? String(num) : '0'+ num;
+    }
+
+    let isDown_pro = false;
+    let proEventMap = {
+      oWidth: 0,
+      ox: 0,
+      'mousedown': function(e){
+        isDown_pro = true;
+        oWidth = proCont.offsetWidth;
+        ox = e.clientX;
+        if(!video.paused){
+          myPause();
+        }
+      },
+      'mousemove': function(e){
+        if(!isDown_pro){
+          return false;
+        }
+        _x =  Math.min($('.progress').offsetWidth - oWidth,(e.clientX - ox)) ;
+        proCont.style.width = oWidth + _x + 'px';
+        let ratio = proCont.offsetWidth / $('.progress').offsetWidth;
+        currTime = ~~(ratio * countTime);
+        setCurrentTime(currTime);
+      },
+      'mouseup': function(e){
+        if(!isDown_pro){
+          return false;
+        }
+        isDown_pro = false;
+        if(video.paused){
+          myPlay();
+        }
+      }
+    }
+    
+    function pro_drag(e){
+      if(proEventMap[e.type] && typeof proEventMap[e.type] === 'function'){
+        proEventMap[e.type](e);
+      }
+    }
+     
+    proBtn.addEventListener('mousedown',pro_drag,false);
+    document.addEventListener('mousemove',pro_drag,false);
+    document.addEventListener('mouseup',pro_drag,false);
+  </script>
+
+  
+
+</body>
+</html>

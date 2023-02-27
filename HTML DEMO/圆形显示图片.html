@@ -1,0 +1,90 @@
+<!--
+ * @Author: KARL
+ * @Date: 2022-08-27 13:29:40
+ * @LastEditors: karl
+ * @LastEditTime: 2023-02-06 17:39:00
+ * @FilePath: /HTML DEMO/圆形显示图片.html
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by KARL, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>圆形显示图片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wrap {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      background-color: pink;
+      border-radius: 50%;
+      background-image: url('./images/re1.jpg');
+      background-repeat: no-repeat;
+      background-position: -170px -20px;
+    }
+
+    .wrap::before,
+    .wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .wrap::before {
+      background-color: rgba(0, 0, 0, .5);
+    }
+
+    .wrap::after {
+      background: inherit;
+      clip-path: circle(0% at 50% 50%);
+      transition: .5s;
+    }
+
+    .wrap:hover::after {
+      clip-path: circle(50% at 50% 50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <div class="wrap"></div>
+  <script>
+    let aWrap = document.querySelectorAll('.wrap')
+    Array.prototype.forEach.call(aWrap, (item, idx) => {
+      item.style.backgroundImage = `url('./images/re${idx + 1}.jpg')`
+    })
+    // aWrap[0].style.backgroundImage = `url('./images/re2.jpg')`
+  </script>
+</body>
+
+</html>

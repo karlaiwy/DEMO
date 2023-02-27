@@ -1,0 +1,15 @@
+{{#each list}}
+<div class="blog-comment--item">
+  <div class="blog-comment--info blog-line--row ">
+    <div class="blog-comment--user">
+      <div class="blog-comment--avatar">
+        {{!-- <img class="avatar" src="{{uid.avatar}}" alt="pic"> --}}
+      </div>
+      <span class="blog-comment--username">{{uid.nikname}}</span>
+    </div>
+    <span class="blog-comment--date">{{date}}</span>
+  </div>
+
+  <div class="blog-comment--content">{{content}}</div>
+</div>
+{{/each}}

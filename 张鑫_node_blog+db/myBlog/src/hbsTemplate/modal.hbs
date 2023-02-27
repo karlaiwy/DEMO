@@ -1,0 +1,27 @@
+ 
+ <div class="blog-modal--wrap">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ><span class="modal-btn-close">&times;</span></button>
+        <h4 class="modal-title" >{{title}}</h4>
+      </div>
+      <div class="modal-body user">
+        <form id="{{formType}}" action="javascript:;">
+          {{#each formData}}
+          <div class="input-group">
+            <label class="input-group-addon" id="basic-addon1">{{label}}</label>
+            <input type={{type}} name="{{query}}" class="form-control {{query}}" spellcheck="false" data-msg="{{msg}}" data-input="{{query}}" placeholder="{{placeholder}}" aria-describedby="basic-addon1">
+            {{#if isPass}}<span class="iconeyes">&#xe901;</span>{{/if}}
+          </div>
+          {{/each}}
+        </form>
+      </div>
+      <div class="modal-footer">
+        {{#if isReg}}<button type="button" class="modal-btn modal-btn--have">已注册</button>{{/if}}
+
+        {{#each btns}}
+        <button type="button" class="modal-btn modal-btn-{{name}}" data-name="{{name}}">{{label}}</button>
+        {{/each}}
+      </div>
+    </div>
+</div>

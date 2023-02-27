@@ -1,0 +1,151 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-02-10 10:43:37
+ * @LastEditTime: 2022-02-10 21:04:43
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220210/case01.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单验证</title>
+  <style>
+    @font-face {
+      font-family: 'iconfont';
+      src: url('font/iconfont.woff2?t=1637213438790') format('woff2'),
+          url('font/iconfont.woff?t=1637213438790') format('woff'),
+          url('font/iconfont.ttf?t=1637213438790') format('truetype');
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      font-family: 'iconfont'!important;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 5px 10px 5px;
+    } 
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 300px;
+      margin: 50px auto;
+      box-shadow: 0 0 12px #ccc;
+    }
+
+    input {
+      outline: none;
+    }
+
+    li span {
+      font-family: 'iconfont'!important;
+      position: absolute;
+      left: 300px;
+      width: 150px;
+      color: red;
+    }
+
+    li span.spanError {
+      font-size: 24px;
+      display: none;
+      color: green;
+    }
+
+    input.error {
+      border: 2px solid red;
+    }
+
+    input.success {
+      border: 2px solid green;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul>
+      <li>
+        请输入用户名:<input type="text" name="user" id="user" placeholder="用户名">
+        <span class="spanError">&#xe601;</span>
+      </li>
+      <li>
+        请输入电话号码:<input type="text" name="tel" id="" placeholder="电话号码">
+        <span class="spanError">&#xe601;</span>
+      </li>
+      <li>
+        请输入年龄:<input type="text" name="age" id="" placeholder="年龄">
+        <span class="spanError">&#xe601;</span>
+      </li>
+      <li>
+        请输入性别:<input type="text" name="sex" id="" placeholder="性别">
+        <span class="spanError">&#xe601;</span>
+      </li>
+    </ul>
+    
+    
+    
+  </div>
+  
+
+  <script src="js/common.js"></script>
+  <script>
+    var oWrap = document.querySelector('.wrap');
+    var oInput = document.querySelector('input');
+    var reg = {
+      'user': /^[\u4e00-\u9fa5]{2,6}$/,
+      'tel': /^[1][35789]\d{9}$/,
+      'age': /^[1-9][0-9]$/,
+      'sex': /^[男女]$/
+    };
+    var index = 0;
+    var aSpan = document.querySelectorAll('.spanError');
+    var strArr = [
+      '请输入2-6个汉字',
+      '请输入合法电话号码',
+      '请输入您的真实年龄',
+      '请输入男或女'
+    ];
+
+    oWrap.addEventListener('click',function(e){
+      if(e.target.tagName.toLowerCase() === 'input'){
+        if(!reg[e.target.name].test(e.target.value)){
+          var vDom = document.createElement('span');
+          index = getElementIndex(e.target.parentNode);
+          vDom.innerText = strArr[index];
+          e.target.parentNode.append(vDom);
+        }
+      }
+    },false);
+
+    document.oninput = function(e){
+      if(e.target.tagName.toLowerCase() === 'input'){
+        var val = e.target.value;
+        e.target.className = 'error';
+        if (reg[e.target.name].test(val)){
+          e.target.className = 'success';
+          e.target.parentNode.children[2].style.display = 'none';
+          aSpan[index].style.display = 'block';
+        }else {
+          aSpan[index].style.display = 'none';
+          e.target.parentNode.children[2].style.display = 'block';
+        }
+      }
+    }
+
+
+  </script>
+</body>
+</html>

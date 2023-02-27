@@ -1,0 +1,199 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-15 14:43:43
+ * @LastEditTime: 2022-04-16 19:57:12
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_jQ_20220415/case02.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侧边栏</title>
+  <style>
+    @font-face {
+      font-family: 'iconfont';
+      src: url('font/iconfont.ttf?t=1650006983170') format('truetype');
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      /* overflow: hidden; */
+      height: 100%;
+      background-color: #ccc;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    a {
+      color: rgb(127, 125, 125);
+      text-decoration: none;
+    }
+
+    .icon {
+      color: rgb(66, 236, 236);
+    }
+
+    .slider-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      width: 200px;
+      height: 100vh;
+      background-color: #2b2e3c;
+    }
+
+    .slider-wrap>ul {
+      width: 100%;
+    }
+
+    .slider>li>a {
+      display: block;
+      padding: 0 5px 0;
+      height: 36px;
+      line-height: 36px;
+      font-family: 'iconfont'!important;
+      font-size: 20px;
+      color: rgb(66, 236, 236)
+    }
+
+    @keyframes rotate{
+      0%{color:rgb(0, 3, 3)}
+      100%{
+        color:rgb(0, 3, 3);
+        transform: rotate(180deg)}
+    }
+
+    @keyframes _rotate{
+      0%{color:rgb(0, 3, 3)}
+      100%{transform: rotate(-180deg)}
+    }
+
+    .slider>li>a::before {
+      content: '\e8c0';  /*  &#xe8c0;  */  
+      display: inline-block;
+      animation: _rotate .25s 1 forwards;
+    }
+
+    .slider>li.down>a::before {
+      animation: rotate .25s  1 forwards;  
+    }
+
+    /* .slider>li.up>a::before {
+      animation: _rotate 2s 1 forwards;
+    } */
+
+    .slider>li>a:hover {
+      background-color: #eb5152;
+    }
+
+    .slider>li>ul {
+      display: none;
+    }
+
+    .slider ul>li {
+      padding: 4px 10px 0;
+      line-height: 20px;
+    }
+
+    .slider ul>li:hover {
+      border-left: 4px solid #ccc;
+    }
+
+    .slider ul>li:hover a {
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .active {
+      background-color: #eb5152;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider-wrap">
+    <ul class="slider">
+      <li>
+        <a href="#">核心</a>
+        <ul>
+          <li><a href="#">jQuery</a></li>
+          <li><a href="#">get</a></li>
+          <li><a href="#">index</a></li>
+          <li><a href="#">data</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">选择器</a>
+        <ul>
+          <li><a href="#">#id</a></li>
+          <li><a href="#">element</a></li>
+          <li><a href="#">.class</a></li>
+          <li><a href="#">prev</a></li>
+          <li><a href="#">next</a></li>
+          <li><a href="#">:first</a></li>
+          <li><a href="#">:last</a></li>
+          <li><a href="#">.eq(index)</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">事件</a>
+        <ul>
+          <li><a href="#">on</a></li>
+          <li><a href="#">off</a></li>
+          <li><a href="#">click</a></li>
+          <li><a href="#">hover</a></li>
+          <li><a href="#">mousedown</a></li>
+          <li><a href="#">mouseup</a></li>
+          <li><a href="#">mouseover</a></li>
+          <li><a href="#">mouseout</a></li>
+          <li><a href="#">mouseenter</a></li>
+          <li><a href="#">mouseleave</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">效果</a>
+        <ul>
+          <li><a href="#">show</a></li>
+          <li><a href="#">hide</a></li>
+          <li><a href="#">toggle</a></li>
+          <li><a href="#">slideUp</a></li>
+          <li><a href="#">slideDown</a></li>
+          <li><a href="#">slideToggle</a></li>
+          <li><a href="#">fadeIn</a></li>
+          <li><a href="#">fadeOut</a></li>
+          <li><a href="#">fadeTo</a></li>
+          <li><a href="#">fadeToggle</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <script>
+    const $slider_wrap = $('.slider-wrap');
+    const $slider = $('.slider');
+
+    const $a = $('.slider>li>a');
+
+    $slider.on('click','li',function(){
+      // $(this).silbings().removeClass('down');
+      $(this).toggleClass('down').children('a').addClass('active');
+      $(this).children('ul').slideToggle().parent('li').siblings('li').removeClass
+      ('down').children('ul').slideUp(function(){
+        $(this).parent().find('a').removeClass('active');
+      });
+    })  
+ 
+ 
+  </script>
+</body>
+</html>

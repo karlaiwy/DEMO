@@ -1,0 +1,122 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-12 17:32:49
+ * @LastEditTime: 2022-04-12 18:23:36
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_20220412/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    canvas {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+
+  <script>
+    const canvas = document.querySelector('canvas');
+    const context = canvas.getContext('2d');
+    const colors = ["rgb(223,32,0)","rgb(0,182,177)","rgb(250,133,147)","rgb(252,192,2)","rgb(112,19,136)","rgb(247,131,0)","rgb(160,205,88)"];
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize',function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    },false)
+
+    let particles = [];
+
+    document.addEventListener('mousemove',function(e){
+      for(let i = 0; i < random(1,6); i++){
+        particles.push(new Particle({
+            x: e.clientX,
+            y: e.clientY,
+            r: random(10,20),
+            color: random(colors)
+          })
+        );
+      }     
+    },false);
+
+    document.addEventListener('touchmove',function(e){
+      for(let i = 0; i < random(1,6); i++){
+        particles.push(new Particle({
+            x: e.clientX,
+            y: e.clientY,
+            r: random(10,20),
+            color: random(colors)
+          })
+        );
+      }     
+    },false);
+
+    function random(a,b){
+      if(Array.isArray(a)){
+        return a[~~(Math.random()*a.length)];
+      }
+      return a + ~~(Math.random()*(b - a));
+    }
+
+    class Particle{
+      constructor({x=0,y=0,r=4,color='rgb(223,32,0)'}){
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.color = color;
+        this.theta = random(0,Math.PI*2);
+        this.dx = 2 * Math.cos(this.theta);
+        this.dy = 2 * Math.sin(this.theta);
+        this.update();
+        // this.draw();
+        // this.render();
+      }
+
+      update(){
+        this.x += this.dx;
+        this.y += this.dy;
+        this.dx += Math.cos(this.theta)* .12; 
+        this.dy += Math.sin(this.theta)* .12; 
+        this.dx *= .88;
+        this.dy *= .88;
+        this.r *= .96;
+        this.draw();
+      }
+
+      draw(){
+        // context.clearRect(0,0,canvas.width,canvas.height);
+        context.beginPath();
+        // context.globalCompositeOperation = 'lighter';
+        context.fillStyle = this.color;
+        context.arc(this.x,this.y,this.r,0,Math.PI*2,false);
+        context.fill();
+      }
+    }
+
+
+    function render(){
+      context.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(item=>item.update());
+      requestAnimationFrame(render);
+    }
+    render();
+  </script>
+</body>
+</html>

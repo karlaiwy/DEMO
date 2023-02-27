@@ -1,0 +1,123 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-23 11:32:01
+ * @LastEditTime: 2022-01-23 16:12:03
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220123/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 放大镜 </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .product {
+      position: relative;
+      top: 50px;
+      left: 100px;
+    }
+
+    .preview {
+      width: 225px;
+      height: 225px;
+      border: 2px solid #ccc;
+    }
+
+    .mask {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 150px;
+      height: 150px;
+      background-color: rgba(230, 223, 120, 0.4);
+      cursor: move;
+    }
+
+    .show {
+      display: none;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 250px;
+      width: 500px;
+      height: 500px;
+      border: 2px solid #ccc;
+    }
+
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="product">
+    <div class="preview">
+      <img src="img/m30.jpg" alt="pic" width="225" height="225">
+      <div class="mask"></div>
+    </div>
+    <div class="show">
+      <img src="img/m30-big.jpg" alt="pic" width="800" height="800">
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var oPro = $('.product');
+    var oPreview = $('.preview');
+    var oMask = $('.mask');
+    var oShow = $('.show');
+    var oSmallPic = oPreview.children[0];
+    var oBigPic = oShow.children[0];
+
+
+    var eventMap = {
+      'mouseenter': function(e){
+        oMask.classList.add('active');
+        oShow.classList.add('active');
+      },
+      'mouseleave': function(e){
+        oMask.classList.remove('active');
+        oShow.classList.remove('active');
+      },
+      'mousemove': function(e){
+        var x = e.clientX;
+        var y = e.clientY;
+        x = x - oPro.offsetLeft - oMask.offsetWidth / 2;
+        y = y - oPro.offsetTop - oMask.offsetHeight / 2
+        x = Math.max(x,0);
+        x = Math.min(x,oPreview.offsetWidth - oMask.offsetWidth);
+        y = Math.max(y,0);
+        y = Math.min(y,oPreview.offsetHeight - oMask.offsetHeight);
+
+        oMask.style.left = x + 'px';
+        oMask.style.top = y + 'px';
+
+        var radios = (oBigPic.offsetWidth - oShow.offsetWidth) / (oSmallPic.offsetWidth - oMask.offsetWidth);
+        oBigPic.style.marginLeft = -x * radios + 'px';
+        oBigPic.style.marginTop = -y * radios + 'px';
+      }
+    };
+
+    function handle(e){
+      if(eventMap[e.type] && typeof eventMap[e.type] === 'function'){
+        eventMap[e.type](e);
+      }
+    }
+
+    oPreview.addEventListener('mouseenter',handle,false);
+    oPreview.addEventListener('mouseleave',handle,false);
+    oPreview.addEventListener('mousemove',handle,false);
+
+
+  </script>
+</body>
+</html>

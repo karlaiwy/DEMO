@@ -1,0 +1,11 @@
+
+{{#if islogin}}
+<a href="javascript:;" data-router="write" class="blog-head--avatar">
+  <img class="blog-login--pic" src={{avatarSrc}} alt="login">
+  <i class="blog-head--write glyphicon glyphicon-pencil"></i>
+</a>
+  
+{{else}}
+  <img src="img/fire.gif" alt="">
+  <a class="blog-btn" >登录 / 注册</a>
+{{/if}}

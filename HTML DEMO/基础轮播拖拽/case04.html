@@ -1,0 +1,84 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-05 16:14:46
+ * @LastEditTime: 2022-01-05 17:42:19
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220105/case03.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础 拖拽模组 加强（边界限制）</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      background-color: #690;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var oBox = $('.box');
+
+    var startX = 0, startY = 0;
+    var startTop = 0, startLeft = 0;
+       
+
+    var isDown = false;
+    oBox.addEventListener('mousedown',function(e){
+      startX = e.clientX;
+      startY = e.clientY;
+      startTop = parseInt(getStyle(oBox,'top'));
+      startLeft = parseInt(getStyle(oBox,'left'));
+      isDown = true;
+    },false);
+
+    document.addEventListener('mousemove',function(e){
+      if(isDown){
+        var _x = e.clientX - startX;
+        var _y = e.clientY - startY;
+
+        console.log(_x, _y);
+        console.log(getStyle(oBox,'left'));
+
+        var maxTop = window.innerHeight - oBox.offsetHeight;
+        var maxLeft = window.innerWidth - oBox.offsetWidth;
+
+        var endX = startLeft + _x;
+        var endY = startTop + _y;
+
+        endX = Math.min(endX, maxLeft);//限制最大值为 maxLeft
+        endX = Math.max(endX, 0);//限制最小值为 0
+        endY = Math.min(endY, maxTop);//限制最大值为 maxTOP
+        endY = Math.max(endY, 0);//限制最小值为 0
+
+        oBox.style.left = endX + 'px';
+        oBox.style.top = endY + 'px';
+
+      }
+    },false);
+
+    document.addEventListener('mouseup',function(){
+      isDown = false;
+    },false);
+  </script>
+</body>
+</html>

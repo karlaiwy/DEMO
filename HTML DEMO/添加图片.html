@@ -1,0 +1,107 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-23 10:15:12
+ * @LastEditTime: 2022-03-23 15:02:20
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_20220323/case01.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 获取图片 </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      text-align: center;
+      font-size: 80px;
+      line-height: 90px;
+      border: 3px dashed #ccc;
+      border-radius: 20px;
+      box-shadow: 0 0 5px #ccc;
+      cursor: pointer;
+    }
+
+    .show {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 300px;
+      height: 300px;
+      margin: 10px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 5px #333;
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">+</div>
+  <input type="file" hidden  accept="images/*.jpeg,images/*.gif">
+  <div class="show"></div>
+  <!-- 
+    在拖动目标上触发的事件:
+    ondragstart: 用户开始拖动元素时触发
+    ondrag: 元素正在拖动时触发
+    ondragend: 用户完成元素拖动后触发
+
+    释放目标时触发的事件:
+    ondragenter: 当被拖动的对象进入某容器范围内时触发
+    ondragleave: 当被拖动的对象离开某容器范围内时触发
+    ondragover: 当被拖动的对象在另一个对象容器中拖动时触发
+
+    ondrop:   在一个拖动过程中，释放鼠标时触发
+    注意!!!!!: 要使 ondrop 触发执行,必须先在 ondragover 取消默认行为
+    // 默认情况下,数据/元素不能在其他元素中被拖放。对于drop我们必须防止元素的默认处理
+   -->
+  <script>
+    const oInput = document.querySelector('input');
+    const oWrap = document.querySelector('.wrap');
+    const oShow = document.querySelector('.show');
+
+
+    oWrap.onclick = function(){
+      oInput.click();
+    }
+
+    oInput.addEventListener('change',function(e){
+      oShow.replaceChildren();
+      console.log(this.files);//  获取到点击的文件
+      createFileReader(this.files[0]);
+    },false);
+
+    function createImg(src){
+      let img = document.createElement('img');
+      img.src = src;
+      oShow.append(img);
+    }
+
+    function createFileReader(file) {
+      let fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      //读取成功的时候触发
+      console.log(fileReader);
+      fileReader.onload = function () {
+        let src = this.result
+        //    base64
+        createImg(src);
+      }
+    }
+  </script>
+</body>
+</html>

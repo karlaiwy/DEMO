@@ -1,0 +1,134 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-23 13:36:19
+ * @LastEditTime: 2022-03-23 14:33:34
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_20220323/case02.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 拖拽 </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    .wrap {
+      display: flex;
+      width: 500px;
+      margin: 50px auto;
+      /* background-color: #222; */
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 100px;
+      margin: 10px;
+      padding: 10px;
+      box-shadow: 0 0 4px #333;
+    }
+
+    .content p {
+      width: 100%;
+      margin: 2px 0;
+      text-align: center;
+      line-height: 20px;
+      border: 1px solid skyblue;
+      cursor: pointer;
+    }
+
+    .content p:hover {
+      background-color: orange;
+    }
+
+    .show::before {
+      content: '请将拖拽内容放在此处';
+      line-height: 20px;
+      font-size: 16px;
+      color: #ccc;
+    }
+    .show {
+      width: 300px;
+      text-align: center;
+      border: 2px dashed #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="content">
+      <p draggable="true">拖拽内容1</p>
+      <p draggable="true">拖拽内容2</p>
+      <p draggable="true">拖拽内容3</p>
+      <p draggable="true">拖拽内容4</p>
+      <p draggable="true">拖拽内容5</p>
+      <p draggable="true">拖拽内容6</p>
+      <p draggable="true">拖拽内容7</p>
+      <p draggable="true">拖拽内容8</p>
+      <p draggable="true">拖拽内容9</p>
+    </div>
+    <div class="show"></div>
+  </div>
+  
+   <!-- 
+    在拖动目标上触发的事件:(绑定对象 是 拖拽对象)
+    ondragstart: 用户开始拖动元素时触发
+    ondrag: 元素正在拖动时触发
+    ondragend: 用户完成元素拖动后触发
+
+    释放目标时触发的事件:（绑定对象 是 探测对象）
+    ondragenter: 当被拖动的对象进入某容器范围内时触发
+    ondragleave: 当被拖动的对象离开某容器范围内时触发
+    ondragover: 当被拖动的对象在另一个对象容器中拖动时触发
+
+    ondrop:   在一个拖动过程中，释放鼠标时触发
+    注意!!!!!: 要使 ondrop 触发执行,必须先在 ondragover 取消默认行为
+    // 默认情况下,数据/元素不能在其他元素中被拖放。对于drop我们必须防止元素的默认处理
+   -->
+   <script>
+     const oCont = document.querySelector('.content');
+     const aP = oCont.querySelectorAll('p');
+     const oShow = document.querySelector('.show');
+
+     let ele;
+     oCont.addEventListener('mousedown',function(e){
+       if (e.target.tagName.toLowerCase() === 'p'){
+         e.target.ondragstart = function(){
+           ele = this;
+           oCont.style.boxShadow = '0 0 4px #facc';
+         }
+
+        // 默认情况下,数据/元素不能在其他元素中被拖放。对于drop我们必须防止元素的默认处理
+         document.ondragover = function(e){
+           e.preventDefault();
+         }
+
+         oShow.ondragenter = function(){
+           this.style.border = '2px solid red';
+         }
+         oShow.ondragleave = function(){
+           this.style.border = '';
+         }
+
+         e.target.ondragend = function(){
+           oCont.style.boxShadow = '0 0 4px #333';
+           oShow.style.border = '';
+         }
+         oShow.ondrop = function(){
+          // e.preventDefault(); 这里不需要取消默认行为
+          oShow.append(ele);
+         } 
+       }
+     },false);
+   </script>
+</body>
+</html>

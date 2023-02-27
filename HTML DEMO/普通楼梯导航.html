@@ -1,0 +1,137 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-23 16:14:06
+ * @LastEditTime: 2022-01-25 10:55:06
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220123/case01.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>楼梯导航</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .content {
+      width: 800px;
+      margin: 50px auto;
+    }
+
+    .content>li {
+      margin-bottom: 20px;
+      width: 800px;
+      height: 400px;
+      color: #fff;
+      font-size: 120px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 400px;
+      background-color: #368;
+    }
+
+    .slider {
+      position: fixed;
+      top: 100px;
+      right: 50px;
+      width: 50px;
+    }
+
+    .slider li {
+      font-size: 30px;
+      color: tomato;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+    }
+
+    .slider li:hover {
+      color: skyblue;
+      background-color: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="content">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+      <li>10</li>
+      <li>11</li>
+      <li>12</li>
+    </ul>
+
+    <ul class="slider">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+      <li>10</li>
+      <li>11</li>
+      <li>12</li>
+    </ul>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var aCont = document.querySelectorAll('.content>li');
+    var aLi = document.querySelectorAll('.slider>li');
+    var oSlider = document.querySelector('.slider');
+
+    oSlider.addEventListener('click',function(e){
+      if(e.target.tagName.toLowerCase() === 'li'){
+        var target = e.target;
+        var index = getElementIndex(target);
+
+        console.log(getPosition(aCont[index]));
+        console.log(document.documentElement.scrollTop);
+        // document.documentElement.scrollTop = getPosition(aCont[index]).y;
+        scrollMove(aCont[index]);
+      }
+    },false); 
+    var timer = 0;
+    function scrollMove(ele){
+      var target = getPosition(ele).y;
+      var scrollTop;
+      var speed;
+      console.log(target);
+      clearInterval(timer);
+      timer = setInterval(function(){
+        scrollTop = document.documentElement.scrollTop;
+        speed = ( target - scrollTop ) / 10;
+
+        document.documentElement.scrollTop = scrollTop + speed;
+
+        if (Math.abs(scrollTop - target) <= 10) {
+          document.documentElement.scrollTop = target;
+          clearInterval(timer);
+        }
+      },1000 / 30);
+
+    }
+  </script>
+</body>
+</html>

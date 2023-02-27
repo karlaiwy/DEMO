@@ -1,0 +1,81 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1650155266816') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-duoseqiu:before {
+  content: "\e784";
+}
+
+.icon-feihang:before {
+  content: "\e785";
+}
+
+.icon-diqiu:before {
+  content: "\e786";
+}
+
+.icon-feichuan:before {
+  content: "\e787";
+}
+
+.icon-feihangqiu:before {
+  content: "\e788";
+}
+
+.icon-hengqiu:before {
+  content: "\e789";
+}
+
+.icon-huojian2:before {
+  content: "\e78a";
+}
+
+.icon-huojian:before {
+  content: "\e78b";
+}
+
+.icon-lanqiu:before {
+  content: "\e78c";
+}
+
+.icon-qiu:before {
+  content: "\e78d";
+}
+
+.icon-qiugan:before {
+  content: "\e78e";
+}
+
+.icon-raohang:before {
+  content: "\e78f";
+}
+
+.icon-taikong:before {
+  content: "\e790";
+}
+
+.icon-xingqiu:before {
+  content: "\e791";
+}
+
+.icon-xinggui:before {
+  content: "\e792";
+}
+
+.icon-xingyue:before {
+  content: "\e793";
+}
+
+.icon-yueqiu:before {
+  content: "\e794";
+}
+

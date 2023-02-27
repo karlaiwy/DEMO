@@ -1,0 +1,10 @@
+<ul class="blog-head--nav__wrap">
+  {{#each list}}
+  <li class="blog-head--nav__item">
+    <a data-router="{{route}}" href="javascript:;">{{title}}</a>
+    <svg class="icon" hidden aria-hidden="true">
+      <use xlink:href="{{id}}"></use>
+    </svg>
+  </li>
+  {{/each}}
+</ul>

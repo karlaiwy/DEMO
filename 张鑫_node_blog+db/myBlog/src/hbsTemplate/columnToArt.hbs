@@ -1,0 +1,26 @@
+{{#each aids}}
+<article class="blog-content--item">
+  <a href="javascript:;" data-router="getArticleById" data-id="{{_id}}">
+    <div class="blog-item--column">{{column.name}}</div>
+    <h1 class="blog-item--title">{{title}}</h1>
+    <img src={{cover}}>
+    <div class="blog-item--details">
+      {{content}}
+    </div>
+    <div class="blog-item-foot">
+      <div class="blog-foot-time">
+        <i class="glyphicon glyphicon-time"></i>
+        <span>{{date}}</span>
+      </div>
+      <div class="blog-foot--auth">
+        <div class="blog-foot--authPic"><img class="avatar" src="{{author.avatar}}" alt="avatar"></div>
+        <span class="blog-foot--authNik">{{author.nikname}}</span>
+      </div>
+      <span class="blog-foot--hit">浏览({{hit_num}})</span>
+      <span class="blog-foot--like">点赞({{like_num}})</span>
+      <span class="blog-foot--commit">评论({{comment_num}})</span>
+    </div>
+  </a>
+
+</article>
+{{/each}}

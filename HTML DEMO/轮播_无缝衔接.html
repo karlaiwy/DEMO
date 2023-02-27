@@ -1,0 +1,245 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-20 09:41:26
+ * @LastEditTime: 2022-02-17 17:18:38
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220120/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播图 无缝连接</title>
+  <style>
+    @font-face {
+    font-family: "iconfont"; /* Project id 2947552 */
+    src: url('font/iconfont.woff2?t=1637213438790') format('woff2'),
+        url('font/iconfont.woff?t=1637213438790') format('woff'),
+        url('font/iconfont.ttf?t=1637213438790') format('truetype');
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      position: relative;
+      overflow: hidden;
+      margin: 20px auto;
+      width: 500px;
+      height: 200px;
+      box-shadow: 0 0 8px #333;
+    }
+
+    .btn {
+      position: absolute;
+      top: 85px;
+      width: 100%;
+      height: 40px;
+    }
+
+    .btn span {
+      font-family: "iconfont" !important;
+      position: absolute;
+      top: 0;
+      width: 32px;
+      height: 40px;
+      text-align: center;
+      line-height: 35px;
+      font-size: 40px;
+      font-weight: 900;
+      color: rgb(240, 133, 11);
+      background-color: orange;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn span:hover {
+      background-color: skyblue;
+      color: rgb(15, 236, 170);
+    }
+
+    span.prev {
+      left: 10px;
+    }
+    span.next {
+      right: 10px;
+    }
+    
+    .list {
+      width: 100px;
+      height: 200px;
+    }
+    .list li{
+      float: left;
+    }
+
+    .slider {
+      display: flex;
+      justify-content: space-around;
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 150px;
+    }
+
+    .slider span {
+      width: 20px;
+      height: 20px;
+      color: #000;
+      text-align: center;
+      line-height: 20px;
+      background-color: #fff;
+      border: 1px solid #000;
+    }
+
+    .slider span.active {
+      background-color: red;
+      color: #fff;
+      padding: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="btn">
+      <span class="prev">&lt;</span>
+      <span class="next">&gt;</span>
+    </div>
+    
+    <ul class="list">
+      <li><img src="img/1.jpg" alt="pic" width="500" height="200"></li>
+      <li><img src="img/2.jpg" alt="pic" width="500" height="200"></li>
+      <li><img src="img/3.jpg" alt="pic" width="500" height="200"></li>
+      <li><img src="img/4.jpg" alt="pic" width="500" height="200"></li>
+      <li><img src="img/5.jpg" alt="pic" width="500" height="200"></li>
+      <li><img src="img/1.jpg" alt="pic" width="500" height="200"></li>
+    </ul>
+
+    <div class="slider">
+      <span class="active">1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script>
+    var oBox = $('.box');
+    var oBtn = $('.btn');
+    var oList = $('.list');
+    var aLi = oList.children;
+    var oSlider = $('.slider');
+    var aSlider = oSlider.children;
+    var len = aLi.length;
+    var index = 0;
+    var time = 0;
+    var timer = 0;
+    var picWidth = aLi[0].offsetWidth;
+
+    oList.style.width = len * picWidth + 'px';
+    oBtn.addEventListener('mousedown',function(e){
+      console.log(e.target.className);
+      if(e.target.tagName.toLowerCase() === 'span'){
+        if(eventTypeMap[e.target.className] && typeof eventTypeMap[e.target.className] === 'function'){
+          eventTypeMap[e.target.className](e);
+        }
+      }
+    },false);
+
+    oSlider.addEventListener('mouseover',function(e){
+      if (e.target.tagName.toLowerCase() === 'span'){
+        // console.log(e.target.innerText);
+        move(function(){
+          index = e.target.innerText - 1;
+        });
+      }
+    },false);
+
+    autoChange();
+    oBox.addEventListener('mouseover',function(){
+      clearInterval(timer);
+    },false);
+    oBox.addEventListener('mouseout',function(){
+      autoChange();
+    },false);
+
+    var eventTypeMap = {
+      'prev': function(e){
+        move(function(){
+          if(index === 0){
+            index = len - 1;
+            oList.style.marginLeft = -index * 500 + 'px';
+          }
+          index--;
+          index = (index + len) % len;
+        });   
+      },
+      'next': function(e){
+        move(function(){
+          if(index === len - 1){
+            index = 0;
+            oList.style.marginLeft = '0px';
+          }
+          index++;
+          index = index % len;
+        });       
+      }
+    };
+
+    function move(callback){
+      aSlider[index % (len - 1)].classList.remove('active');
+      callback && callback();
+      animate(oList,{
+        marginLeft: -index * 500 + 'px'
+      });
+      aSlider[index % (len - 1)].classList.add('active');
+    }
+
+    function animate(ele,styleList,callback){
+      clearInterval(time);
+      var toggle = false;
+      time = setInterval(function(){
+        for(var key in styleList){
+          toggle = true;
+          var target = parseInt(styleList[key]);
+          var curr = parseInt(getStyle(ele,[key])); 
+          var speed = (target - curr) / 10;
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+          ele.style[key] = curr + speed + 'px';
+          if (curr === target){
+            ele.style[key] = target + 'px';
+          }
+          if (curr !== target){
+            toggle = false;
+          }
+        }
+        if (toggle){
+          clearInterval(time);
+          callback && callback();
+        }
+      },1000/60); 
+    }
+
+    function autoChange(){
+      clearInterval(timer);
+      timer = setInterval(function(){
+        move(function(){
+          eventTypeMap['next']();
+        })
+      },1500);
+    }
+  </script>
+</body>
+</html>

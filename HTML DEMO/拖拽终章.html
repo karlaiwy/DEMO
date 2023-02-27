@@ -1,0 +1,246 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-12 20:47:24
+ * @LastEditTime: 2022-02-17 17:31:30
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220111/case05.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖拽 终章</title>
+  <style>
+    * {
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      display: block;
+      pointer-events: none;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: space-between;
+      position: relative;
+      width: 500px;
+      height: 500px;
+      padding: 20px;      
+      background-color: #963;
+      border-radius: 4px;
+      box-sizing: border-box;
+      box-shadow: 0 0 8px #222;
+    }
+
+    .wrap>li {
+      transition: .2s linear;
+    }
+
+    .wrap>li:hover {
+      transform: scale(1.2);
+    }
+
+    .wrap li.on {
+      z-index: 999;
+      box-shadow: 0 0 8px rgb(245, 231, 40);
+      transition: none;
+    }
+    .wrap li.active {
+      transform: scale(1.1); 
+      box-shadow: 0 0 8px rgb(228, 9, 93);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="box">
+    <ul class="wrap">
+      <li><img src="img/0.png" alt=""></li>
+      <li><img src="img/1.png" alt=""></li>
+      <li><img src="img/2.png" alt=""></li>
+      <li><img src="img/3.png" alt=""></li>
+      <li><img src="img/4.png" alt=""></li>
+      <li><img src="img/5.png" alt=""></li>
+      <li><img src="img/6.png" alt=""></li>
+      <li><img src="img/7.png" alt=""></li>
+      <li><img src="img/8.png" alt=""></li>
+      <li><img src="img/9.png" alt=""></li>
+      <li><img src="img/10.png" alt=""></li>
+      <li><img src="img/11.png" alt=""></li>
+      <li><img src="img/12.png" alt=""></li>
+      <li><img src="img/13.png" alt=""></li>
+      <li><img src="img/14.png" alt=""></li>
+      <li><img src="img/15.png" alt=""></li>
+    </ul>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var oWrap = $('.wrap');
+    var aChild = oWrap.children;
+    var childLen = aChild.length;
+    // console.log(childLen); 16 
+    var posArr = [];
+
+    function getPos(){
+      for(var i = 0; i < childLen; i++){
+        posArr.push([aChild[i].offsetLeft,aChild[i].offsetTop]);
+      }
+      return posArr;
+    }
+    posArr = getPos();
+
+    function setPos(){
+      for(var i = 0; i < childLen; i++){
+        (function(idx){
+          setTimeout(function(){
+            aChild[idx].style.left = posArr[idx][0] + 'px';
+            aChild[idx].style.top = posArr[idx][1] + 'px';
+            aChild[idx].style.position = 'absolute';
+          },0);
+        })(i); 
+        eventTypeMap.vDomArr[i] = aChild[i];
+      }
+    } 
+
+    var eventTypeMap = {
+      isDown: false,
+      isMove: false,
+      targetEle: null,
+      collEle: null,
+      vDomArr: [],
+      startPos: {
+        x: 0,
+        y: 0,
+        left: 0,
+        top: 0
+      },
+      'mousedown': function(e){
+        if(e.target.tagName.toLowerCase() === 'li'){
+          this.isDown = true;
+          this.startPos.x = e.clientX;
+          this.startPos.y = e.clientY;
+          this.startPos.left = e.target.offsetLeft;
+          this.startPos.top = e.target.offsetTop;
+          this.targetEle = e.target; 
+          this.targetEle.classList.add('on');
+        }
+      },
+      'mousemove': function(e){
+        if(!this.isDown){
+          return false;
+        }
+        this.collEle = null;
+        var _x = e.clientX - this.startPos.x;
+        var _y = e.clientY - this.startPos.y;
+        this.targetEle.style.left = this.startPos.left + _x + 'px';
+        this.targetEle.style.top = this.startPos.top + _y + 'px';
+        this.targetEle.pointer = {
+            x: e.clientX,
+            y: e.clientY
+          };
+        for(var i = 0; i < childLen; i++){
+          aChild[i].classList.remove('active');
+          if(aChild[i] !== this.targetEle){
+            if(isInvolved(this.targetEle,aChild[i])){
+              this.collEle = aChild[i];
+              this.collEle.classList.add('active');
+            }
+          }
+        }
+        if(this.collEle && !this.isMove){
+          this.isMove = true;
+          var targetIdx = this.vDomArr.indexOf(this.targetEle);
+          var collIdx = this.vDomArr.indexOf(this.collEle);
+          console.log(this.vDomArr);
+          this.vDomArr.splice(targetIdx,1);
+          console.log(this.vDomArr);
+          this.vDomArr.splice(collIdx,0,this.targetEle);
+          translate(this.vDomArr,this.targetEle);
+          console.log(targetIdx,collIdx);
+          console.log(this.vDomArr);
+        }
+      },
+      'mouseup': function(e){
+        if(!this.isDown){
+          return false;
+        }
+        this.isDown = false;
+        if(this.targetEle){
+          this.targetEle.classList.remove('on');
+          this.targetEle = null;
+        }
+        if(this.collEle){
+          this.collEle.classList.remove('active');
+          this.collEle = null;
+        }
+        translate(this.vDomArr,null);
+      }
+    };
+
+    setPos();
+    oWrap.addEventListener('mousedown',drag,false);
+    document.addEventListener('mousemove',drag,false);
+    document.addEventListener('mouseup',drag,false);
+
+    function drag(e){
+      if(eventTypeMap[e.type] && typeof eventTypeMap[e.type] === 'function'){
+        eventTypeMap[e.type](e);
+      }
+    }
+
+    function isInvolved(target,other){
+      var L = getPosition(other).x,
+          R = L + other.offsetWidth,
+          T = getPosition(other).y,
+          B = T + other.offsetHeight;
+      if(L < target.pointer.x &&
+      R > target.pointer.x &&
+      T < target.pointer.y &&
+      B > target.pointer.y){
+        return true;
+        console.log(111);
+      } else {
+        return false;
+      }
+    }
+
+    function translate(vDom,target){
+      posArr.forEach(function(item,idx,arr){
+        if(vDom[idx] !== target){
+          vDom[idx].style.left = item[0] + 'px';
+          vDom[idx].style.top = item[1] + 'px';
+        }
+      });
+      setTimeout(function(){
+        eventTypeMap.isMove = false;
+      },500);
+    }
+  </script>
+</body>
+</html>

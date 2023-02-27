@@ -1,0 +1,245 @@
+@font-face {
+  font-family: 'add';
+  src: url('../font/add/iconfont.ttf?t=1666868150849') format('truetype');
+}
+
+@import './_value.styl'
+/****** main start ******/ 
+/* slide start */
+
+
+
+
+*
+  user-select none
+
+.blog-slide--wrap
+  box-sizing border-box
+  padding 20px
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  background-color transparent
+  border-radius 10px
+  box-shadow 0 0 6px 4px #ccc
+
+.blog-slide--avatar
+  position relative
+  width 120px
+  height 120px
+  margin 20px 0
+  border-radius 50%
+  overflow hidden
+
+
+
+.blog-slide--info
+  display grid
+  grid-template-rows 1fr 1fr 4fr
+  grid-row-gap 10px
+  justify-items center
+  align-items center
+
+.blog-info--nickname
+  text-align center
+
+.blog-info--state
+  display flex
+  justify-content center
+.blog-state-item
+  display flex 
+  flex-direction column
+  justify-content center
+  align-items center
+  padding 0 20px
+.blog-item--name
+  color font-theme-color
+.blog-item--count
+  font-size 12px
+  font-weight 700
+
+
+  
+/* slide end */
+
+/* content start */
+.blog-main--content
+  overflow-y auto
+  // overflow hidden
+  box-sizing border-box
+  height 80vh
+  border-radius 8px
+  padding 10px 
+  background-color #ccc
+  box-shadow 0 0 4px #222
+  &::-webkit-scrollbar
+    // display none
+    background-color transparent
+  &::-webkit-scrollbar-thumb
+    border-radius 8px
+    background-color #f1f1f1
+    &:hover
+      background-color rgb(80, 80, 80)
+
+.blog-main--content img 
+  display block
+  width 80%
+  height auto
+  margin 2px auto
+
+
+.blog-main--container
+  margin-top 20px
+  position relative
+//   text-align center
+// .blog-content--item
+  
+
+.blog-write
+  z-index 10
+
+.article
+  // overflow hidden
+  padding 10px 80px
+  margin 20px 10px 30px
+  height 90%
+  border-radius 4px
+  background-color #f1f1f1
+  box-shadow 0 0 4px #222  
+  img 
+    margin 10px auto
+    border-radius 10px
+    box-shadow 0 0 2px 2px #222    
+
+.blog-content--item
+  position relative
+
+.blog-content--item a
+  // overflow-y auto
+  position relative
+  box-sizing border-box
+  min-height 300px
+  display grid
+  grid-template-rows 50px 2fr 36px
+  // grid-row-gap 10px 
+  margin 20px 10px 30px
+  padding 5px 
+  border-radius 4px
+  background-color #f1f1f1
+  box-shadow 0 0 4px #222  
+  img 
+    width 90%
+    height auto
+    border-radius 10px
+    box-shadow 0 0 2px 2px #ccc
+
+.blog-item--column
+  position absolute
+  top -12px
+  left 15px
+  min-width 50px
+  height 30px
+  padding 0 4px
+  text-align center
+  color #807d7d
+  font-weight 700
+  line-height 30px
+  border-radius 4px
+  background-color rgb(235, 151, 221)
+
+.blog-item--title
+  text-align center
+
+.blog-item--details
+  // padding 10px 80px
+  text-indent 2em
+  line-height 24px
+  letter-spacing 1px
+  
+
+.blog-item-foot
+  display grid
+  grid-template-columns 2fr 4fr 1fr 1fr 1fr 
+  align-items center
+  margin: 16px 0 
+
+.blog-foot-time
+  margin-left 8px
+
+.blog-foot--auth,
+.blog-foot-time
+  display flex
+  justify-content left
+  align-items center
+
+.blog-foot--auth>.blog-foot--authPic 
+  width 25px
+  height 25px
+  border-radius 50%
+  overflow hidden
+  img.avatar 
+    margin 0 
+    width 100%
+    height auto
+
+.blog-foot--auth>.blog-foot--authNik
+  margin-left 6px
+  font-size 16px
+  line-height 20px
+
+.blog-foot--hit,
+.blog-foot--like,
+.blog-foot--commit
+  text-align center
+  cursor pointer
+  color lighten(rgba(0,0,0,.5),20%)
+  &:hover 
+    color lighten(rgba(0,0,0,.5),60%)
+
+.blog-column--list
+  padding 4px
+
+.blog-column--list :nth-child(n)
+  margin-right 8px
+  cursor pointer
+.blog-column--list label
+  position relative
+  padding 0 4px
+  &:hover
+    background-color rgb(80,80,80,.5)
+    color #fff
+    border-radius 4px
+
+.blog-column--list .delete-column
+  position absolute
+  top -10px
+  right -15px
+  font-family 'add' !important
+  transform rotate(45deg)
+  transition .5s
+  &:hover
+    transform scale(1.8) rotate(-135deg) translate(-2px,2px)
+    color penColor
+
+.addColumn
+  float right
+  font-size 12px
+  cursor pointer
+  transition .3s 
+  &::before
+    content '\f02b4'
+    font-family 'add'
+  &:hover
+    color #fff
+    transform scale(1.4)
+
+.title_input
+    margin-left 9px
+    padding 4px
+    border-radius 4px
+    font-size 20px 
+    outline none
+    border none
+/* content end */
+/****** main end ******/ 

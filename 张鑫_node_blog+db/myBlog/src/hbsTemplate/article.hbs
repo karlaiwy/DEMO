@@ -1,0 +1,60 @@
+<article class="blog-content--item article" data-article-id={{_id}}>
+
+  <div class="blog-item--column">{{column.name}}</div>
+  <h1 class="blog-item--title">{{title}}</h1>
+  <div class="blog-item-foot">
+    <div class="blog-foot-time">
+      <i class="glyphicon glyphicon-time"></i>
+      <span>{{date}}</span>
+    </div>
+    <div class="blog-foot--auth">
+      <div class="blog-foot--authPic"><img class="avatar" src="{{author.avatar}}" alt="avatar"></div>
+      <span class="blog-foot--authNik">{{author.nikname}}</span>
+    </div>
+  </div>
+  <img src={{cover}}>
+  <p class="blog-item--details">
+    {{{content}}}
+  </p>
+
+
+</article>
+<div class="blog-comment--wrap">
+  <div class="blog-putComment">
+    <input type="text" data-article-id="{{_id}}" name="blog-column--input" spellcheck="false" placeholder="请输入评论"
+      id="blog-column--input">
+    <input type="button" class="blog-comment--button" data-router='postComment' value="评论">
+  </div>
+  {{#each comments}}
+  <div class="blog-comment--item">
+    <div class="blog-comment--info blog-line--row ">
+      <div class="blog-comment--user">
+        <div class="blog-comment--avatar">
+          <img class="avatar" src="{{uid.avatar}}" alt="pic">
+        </div>
+        <span class="blog-comment--username">{{uid.nikname}}</span>
+      </div>
+      <span class="blog-comment--date">{{date}}</span>
+    </div>
+
+    <div class="blog-comment--content">{{content}}</div>
+  </div>
+  {{/each}}
+</div>
+
+
+
+<div class="blog-toolbar hidden-xs">
+  <a class="blog-toolbar--item">
+    <i class="glyphicon glyphicon-eye-open"></i>
+    <span class="blog-toolbar--content">{{hit_num}}</span>
+  </a>
+  <a class="blog-toolbar--item" data-article-id="{{_id}}" data-router="like">
+    <i class="glyphicon glyphicon-heart"></i>
+    <span class="blog-toolbar--content">{{like_num}}</span>
+  </a>
+  <a class="blog-toolbar--item">
+    <i class="glyphicon glyphicon-edit"></i>
+    <span class="blog-toolbar--content">{{comment_num}}</span>
+  </a>
+</div>

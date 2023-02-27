@@ -1,0 +1,212 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-29 08:11:11
+ * @LastEditTime: 2022-02-14 16:36:43
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220129/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 节点操作 </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      height: 600px;
+      background-image: linear-gradient(to right bottom,rgb(19, 200, 212),rgb(157, 43, 172));
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      pointer-events: none;
+    }
+
+    .wrap {
+      display: flex;
+      margin: 100px auto;
+      width: 800px;
+      height: 400px;
+      box-shadow: 0 0 40px #111;
+    }
+
+    .select {
+      display: inline-block;
+      width: 400px;
+      height: 400px;
+      padding: 10px 20px;
+      line-height: 40px;
+      background-color: rgba(227, 240, 170, .5);
+      box-sizing: border-box;
+    }
+
+    .select>p {
+      color: rgb(135, 91, 238);
+      font-size: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .options>li {
+      width: 80px;
+      height: 50px;
+    }
+
+    .options>li:hover {
+      color: orange;
+    }
+
+    .selected {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .selected>li {
+      margin: 5px;
+      padding: 2px 6px;
+      color: rgb(135, 91, 238);
+      line-height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .selected span {
+      color:  #111;
+      font-weight: 700;
+    }
+    .selected span:hover {
+      color: orange;
+    }
+
+    .show-box {
+      display: inline-block;
+      width: 400px;
+      height: 400px;
+      padding: 10px 20px;
+      background-color: #fafafa;
+      box-sizing: border-box;
+    }
+
+    .show {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .show>li {
+      margin: 5px;
+      padding: 2px 6px;
+      color: skyblue;
+      line-height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 4px #111;
+    }
+
+    .disnone {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="select">
+      <p> 请选择你喜欢的球队: </p>
+      <ul class="options">
+        <li> 湖人 </li>
+        <li> 火箭 </li>
+        <li> 凯尔特人 </li>
+        <li> 灰熊 </li>
+        <li> 篮网 </li>
+        <li> 快船 </li>
+        <li> 骑士 </li>
+        <li> 雄鹿 </li>
+        <li> 开拓者 </li>
+        <li> 热火 </li>
+      </ul> 
+      <ul class="selected">
+      </ul>
+    </div>
+    <div class="show-box">
+      <ul class="show">
+      </ul>
+    </div> 
+  </div>
+  
+  <script src="js/common.js"></script>
+  <script>
+    var oOptions = $('.options');
+    var aOps = oOptions.children;
+    var oSelected = $('.selected');
+    var oShow = $('.show');
+    var liIndex = 0;
+
+    oOptions.addEventListener('click',function(e){
+      // if(e.target.tagName.toLowerCase() === 'li' && !e.target.selected){
+      //   createLi(e.target.innerText);
+      //   e.target.selected = true;
+      // }
+      if(e.target.tagName.toLowerCase() === 'li'){
+        liIndex = getElementIndex(e.target);
+        var isSelected = e.target.dataset.selected;
+        if (isSelected === '1'){
+          return false
+        }
+        createLi(e.target.innerText);
+        e.target.dataset.selected = '1';
+      }
+    },false);
+    
+    function createLi(text) {
+      var map = {
+        select:{
+          parentNode: oSelected,
+          str: ' | <span>X</span>'
+        },
+        show:{
+          parentNode: oShow,
+          str: ''
+        }
+      };
+      for(var key in map){
+        var vDom = document.createElement('li');
+        vDom.innerHTML = text + map[key].str;
+        vDom.dataset.selectIdx = liIndex;
+        map[key].parentNode.appendChild(vDom);
+      }
+    }
+
+    oSelected.addEventListener('click',function(e){
+      if(e.target.tagName.toLowerCase() === 'span'){
+        removeLi(e.target.parentNode);
+      }
+    },false);
+
+    function removeLi(target){
+      var index = getElementIndex(target);
+      var selectIdx = target.dataset.selectIdx;
+      oSelected.children[index].remove();
+      oShow.children[index].remove();
+      console.log(selectIdx);
+      oOptions.children[selectIdx].dataset.selected = '0';
+      // oOptions.children[target.dataset.selectIdx].dataset.selected = '0';
+    }
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-14 00:53:22
+ * @LastEditTime: 2022-04-15 20:26:30
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_jQuery_20220413/case01 copy.html
+-->
+<!--
+ * @Author: your name
+ * @Date: 2022-04-13 23:02:39
+ * @LastEditTime: 2022-04-13 23:21:52
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_jQuery_20220413/case00 copy.html
+-->
+<!--
+ * @Author: your name
+ * @Date: 2022-04-13 21:56:10
+ * @LastEditTime: 2022-04-13 23:02:09
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_h5_jQuery_20220413/case00.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选项卡切换</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+      user-select: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: center;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      margin-top: 50px;
+      width: 200px;
+      height: 260px;
+      box-shadow: 2px -1px 6px 2px #222;
+    }
+
+    .tit-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .tit-list>li {
+      width: 65px;
+      font-size: 18px;
+      text-align: center;
+      line-height: 40px;
+      background-color: rgb(122,122,122);
+    }
+
+    .tit-list>li.active {
+      background-color: rgba(14, 186, 89, 0.5);
+      box-shadow: 2px -1px 6px 2px #222;
+    }
+
+    .content {
+      flex:1;
+      box-shadow: 2px -1px 6px 2px #222;
+    }
+
+    .cont-list {
+      height: 100%;
+      background-color: rgba(14, 186, 89, 0.5);
+    }
+
+    .cont-list li {
+      display: none;
+      width: 100%;
+      text-align: center;
+      line-height: 100px;
+    }
+
+    .cont-list li.on {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">
+      <ul class="tit-list">
+        <li class="active">part1</li>
+        <li>part2</li>
+        <li>part3</li>
+      </ul>
+    </div>
+    <div class="content">
+      <ul class="cont-list">
+        <li class="on">part1 的内容</li>
+        <li>part2 的内容</li>
+        <li>part3 的内容</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- <script src="js/common.js"></script> -->
+  <script>
+    const $tit_list = $('.tit-list');
+          aTit = $tit_list.children();
+    const $cont_list = $('.cont-list');
+          $aCont = $cont_list.children();
+
+    $tit_list.on('click','li',function(){
+      let idx = $(this).index();
+      $(this).addClass('active').siblings('li').removeClass('active');
+      $aCont.filter('.on').hide(300,function(){
+        $aCont.eq(idx).toggle(300).addClass('on').siblings('li').removeClass('on');
+      });
+      
+    });
+
+  </script>
+</body>
+</html>

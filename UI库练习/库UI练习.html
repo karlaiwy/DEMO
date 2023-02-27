@@ -1,0 +1,296 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-18 12:50:59
+ * @LastEditTime: 2023-02-06 17:00:33
+ * @LastEditors: karl
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /UI库练习/库UI练习.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 类库 </title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="layui/css/layui.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="layui/layui.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      overflow: hidden;
+      height: 100%;
+      background-image: linear-gradient(rgb(236, 244, 186), rgb(146, 236, 229));
+    }
+
+    .wrap {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      position: relative;
+      width: 300px;
+      height: 50px;
+      margin: 50px auto;
+      line-height: 50px;
+      vertical-align: middle;
+      box-shadow: 0 0 4px #222;
+      background-color: #ccc;
+    }
+
+    .wrap::before {
+      content: '按钮模块';
+      position: absolute;
+      top: -35px;
+      width: 80px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      color: rgb(19, 103, 238);
+      font-size: 16px;
+      background-color: rgba(0, 0, 0, .3);
+      border-radius: 8px;
+    }
+
+    .layui-btn-container {
+      margin-left: 10px;
+    }
+
+    .layui-btn-container .layui-btn {
+      display: none;
+      float: left;
+      margin: 0;
+    }
+
+    .layui-btn-container .layui-btn.active {
+      display: block;
+    }
+
+    #demo1 {
+      margin-left: 5px;
+    }
+
+    .slider {
+      margin: 20px auto;
+      width: 500px;
+      background-color: rgba(53, 51, 51, 0.2);
+    }
+
+    .slider .settings:nth-child(n) {
+      line-height: 45px;
+    }
+
+    .layui-carousel {
+      box-shadow: 0 0 4px #222;
+    }
+
+    .loop {
+      width: 110px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .direc {
+      width: 240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .loop .pro {
+      position: relative;
+      width: 30px;
+      height: 16px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 4px #222;
+      cursor: pointer;
+    }
+
+    .loop .pro.active {
+      background-color: rgb(66, 145, 236);
+    }
+
+    .loop .content.active {
+      position: absolute;
+      left: 15px;
+    }
+
+    .loop .content {
+      position: absolute;
+      top: 1px;
+      left: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: #ccc;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <button class="layui-btn" id="demo1">
+      请选择按钮类型
+      <i class="layui-icon layui-icon-down layui-font-12"></i>
+    </button>
+    <div class="layui-btn-container">
+      <button type="button" class="layui-btn layui-btn-primary layui-anim layui-anim-down">原始按钮</button>
+      <button type="button" class="layui-btn layui-anim layui-anim-down">默认按钮</button>
+      <button type="button" class="layui-btn layui-btn-normal layui-anim layui-anim-scale">百搭按钮</button>
+      <button type="button" class="layui-btn layui-btn-warm layui-anim layui-anim-up">暖色按钮</button>
+      <button type="button" class="layui-btn layui-btn-danger layui-anim layui-anim-scale">警告按钮</button>
+      <button type="button" class="layui-btn layui-btn-disabled layui-anim layui-anim-fadein">禁用按钮</button>
+    </div>
+  </div>
+
+
+  <div class="slider">
+    <div class="settings">
+      <div class="loop">
+        循环播放
+        <div class="pro">
+          <div class="content"></div>
+        </div>
+      </div>
+      <div class="direc">
+        播放方式
+        <input type="radio" checked name="direc" id="default">
+        <label for="default">横向</label>
+        <input type="radio" name="direc" id="updown">
+        <label for="updown">纵向</label>
+        <input type="radio" name="direc" id="fade">
+        <label for="fade">渐隐渐出</label>
+      </div>
+    </div>
+    <div class="layui-carousel" id="test1">
+      <div carousel-item>
+        <img src="images/re1.jpg" alt="">
+        <img src="images/re2.jpg" alt="">
+        <img src="images/re3.jpg" alt="">
+        <img src="images/re4.jpg" alt="">
+        <img src="images/re5.jpg" alt="">
+        <img src="images/re6.jpg" alt="">
+        <img src="images/re7.jpg" alt="">
+        <img src="images/re8.jpg" alt="">
+        <img src="images/re9.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $btn = $('button[type="button"]');
+    $loop = $('.pro');
+    $radio = $('input[type="radio"]');
+
+    //  下拉菜单
+    layui.use('dropdown', function () {
+      var dropdown = layui.dropdown
+      dropdown.render({
+        elem: '#demo1' //可绑定在任意元素中，此处以上述按钮为例
+        , data: [{
+          title: '原始按钮'
+          , id: 0
+        }, {
+          title: '默认按钮'
+          , id: 1
+        }, {
+          title: '百搭按钮'
+          , id: 2
+        }, {
+          title: '暖色按钮'
+          , id: 3
+        }, {
+          title: '警告按钮'
+          , id: 4
+        }, {
+          title: '禁用按钮'
+          , id: 5
+        },]
+        , id: 'demo1'
+        //菜单被点击的事件
+        , click: function (obj) {
+          $btn.eq(obj.id).addClass('active').siblings().removeClass('active');
+          // layer.msg('回调返回的参数已显示再控制台');
+        }
+      });
+    });
+
+    //  slider 轮播图
+    var carousel = layui.carousel;
+    let obj = layui.use('carousel', function () {
+      // carousel.render({
+      //   elem: '#test1',
+      //   width: '100%', //设置容器宽度
+      //   arrow: 'always', //始终显示箭头
+      //   anim: 'default', //切换动画方式
+      //   autoplay: false
+      // });
+    });
+    let myCarousel = obj.carousel.render({
+      elem: '#test1',
+      width: '100%',
+      arrow: 'always',
+      anim: 'fade',
+      interval: 500,
+      autoplay: false
+    })
+
+    let toggle = false;
+    $loop.on('click', function () {
+      $(this).toggleClass('active').children().toggleClass('active');
+      if (!toggle) {
+        if (myCarousel.timer) {
+          clearInterval(myCarousel.timer); // 清空上次的定时器
+        }
+        myCarousel.config.autoplay = true;
+        console.log(myCarousel)
+        // layui.use('carousel', function () {
+        //   carousel.render({
+        //     // elem: '#test1',
+        //     // width: '100%',
+        //     // arrow: 'always',
+        //     // anim: 'default',
+        //     autoplay: true
+        //   });
+        // });
+        toggle = true;
+        return false;
+      }
+      if (toggle) {
+        // carousel.render().config.autoplay = false;
+        if (myCarousel.timer) {
+          clearInterval(myCarousel.timer); // 清空上次的定时器
+        }
+        myCarousel.config.autoplay = false;
+        toggle = false;
+        return false;
+      }
+    })
+
+    $radio.on('click', function () {
+      let str = this.id;
+      layui.use('carousel', function () {
+        carousel.render({
+          elem: '#test1',
+          width: '100%', //设置容器宽度
+          arrow: 'always', //始终显示箭头
+          anim: `${str}`, //切换动画方式
+          autoplay: false
+        });
+      });
+    })
+  </script>
+
+</body>
+
+</html>

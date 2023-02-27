@@ -1,0 +1,260 @@
+<!--
+ * @Author: KARL
+ * @Date: 2022-06-05 10:46:04
+ * @LastEditors: KARL
+ * @LastEditTime: 2022-06-05 17:31:10
+ * @FilePath: /张鑫_h5_成语小游戏/index.html
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by KARL, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>成语小游戏</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script>
+    document.documentElement.style.fontSize = 
+    document.documentElement.clientWidth / 37.5 + 'px';
+  </script>
+  <!-- <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+       
+    .app {
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      background-color: #ddd;
+    }
+    
+    .blank-cell-wrapper {
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+  
+    .blank-cell-item {
+      margin: 5px;
+      width: 20vw;
+      height: 20vw;
+      border: 1px solid #fff;
+    }
+    
+    .char-cell-wrapper {
+      margin-top: 50px; 
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: center;
+      align-content: center;
+    }
+  
+    .char-cell-item {
+      box-sizing: border-box;
+      margin: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20vw;
+      height: 20vw;
+      font-size: 3rem;
+      border: 1px solid #fff;
+      background-color: orange;
+    }
+  </style> -->
+</head>
+<body>
+  <div class="app">
+    <div class="blank-cell-wrapper">
+      <div class="blank-cell-item"></div>
+      <div class="blank-cell-item"></div>
+      <div class="blank-cell-item"></div>
+      <div class="blank-cell-item"></div>
+    </div>
+
+    <div class="char-cell-wrapper">
+      
+    </div>
+  </div>
+  
+  <script src="js/common.js"></script>
+  <script>
+    (function(){
+      let idioms = ['诗情画意','落花流水','一气呵成','风驰电掣'];
+      let charCollection = [],
+          charCellPosition = [],
+          blankCellPosition = new Array(4),
+          resCharArr = [undefined,undefined,undefined,undefined],
+          index = 0,
+          left = 0,
+          top = 0,
+          startPos = {},
+          cellPos = {};
+      
+      let oCharCellWrapper = document.querySelector('.char-cell-wrapper'),
+          aBlankCell = document.querySelectorAll('.blank-cell-item');
+      let blankWidth = aBlankCell[0].offsetWidth,
+          blankHeight = aBlankCell[0].offsetHeight;
+          
+      function init () {
+        getCharArr();
+        renderChar();
+        aCharCell = oCharCellWrapper.querySelectorAll('.char-cell-item');
+        charCellPosition = getPosition(aCharCell,charCellPosition);
+        blankCellPosition = getPosition(aBlankCell,blankCellPosition);
+        aCharCell.forEach((item,idx)=>{
+          item.style.position = 'absolute';
+          item.style.left = charCellPosition[idx].x + 'px';
+          item.style.top = charCellPosition[idx].y + 'px';
+          item.style.margin = 0;
+          item.addEventListener('touchstart',drag,false);
+          item.addEventListener('touchmove',drag,false);
+          item.addEventListener('touchend',drag,false);
+        })
+      }
+      init();
+      
+      let eventMap = {
+        touchstart: function (e) {
+          e.preventDefault();
+          index = Number(e.target.dataset.index);
+          startPos = {
+            x: e.touches[0].clientX,
+            y: e.touches[0].clientY
+          };
+          cellPos = {
+            x: charCellPosition[index].x,
+            y: charCellPosition[index].y
+          }
+        },
+        touchmove:  function (e) {
+          let _x = e.touches[0].clientX - startPos.x,
+              _y = e.touches[0].clientY - startPos.y;
+          
+          left = (cellPos.x + _x);
+          top = (cellPos.y + _y);
+          aCharCell[index].style.left = left + 'px';
+          aCharCell[index].style.top = top + 'px';
+        },
+        touchend: function (e) {
+          for ( let i = 0; i < blankCellPosition.length; i ++){
+            if ((
+                  left > blankCellPosition[i].x &&
+                  left < blankCellPosition[i].x + blankWidth / 2 &&
+                  top  > blankCellPosition[i].y && 
+                  top  < blankCellPosition[i].y + blankHeight / 2
+            )
+            ||(
+                  left + blankWidth < blankCellPosition[i].x + blankWidth &&
+                  left + blankWidth > blankCellPosition[i].x + blankWidth / 2 &&
+                  top  < blankCellPosition[i].y + blankHeight / 2 && 
+                  top  > blankCellPosition[i].y 
+            )
+            ){
+              animate(aCharCell[index],{
+                left: blankCellPosition[i].x + 'px',
+                top: blankCellPosition[i].y + 'px'
+              })
+              setResArr(aCharCell[index],i);
+              console.log(resCharArr)
+              if (!resCharArr.includes(undefined)){
+                let result = getResultChar(resCharArr);
+                setTimeout(()=>{
+                  if (checkRes(result,idioms)){
+                    alert('恭喜回答正确！')
+                  }else {
+                    alert('回答错误！')
+                  }
+                  resetCharArr();
+                  resCharArr = [undefined,undefined,undefined,undefined];
+                },1000)
+               
+              }
+              break;
+            }
+            animate(aCharCell[index],{
+              left: cellPos.x + 'px',
+              top: cellPos.y + 'px'
+            })
+          } 
+        }
+      }
+
+      function drag (e) {
+        let type = e.type;
+        if (eventMap[type] && typeof eventMap[type] === 'function'){
+          eventMap[type](e);
+        }
+      }
+
+      function getCharArr () {
+        idioms.map(item=>charCollection.push(...item.split('')));
+        charCollection.sort(randowSort);
+      }
+
+      function randowSort (a,b) {
+        return Math.random() > .5 ? 1 : -1
+      }
+
+      function renderChar () {
+        let charWrapperHtml = '';
+        for ( let i = 0,len = charCollection.length; i < len; i ++) {
+          let cell_html = `<div class="char-cell-item" data-index = ${i}>${charCollection[i]}</div>`;
+          charWrapperHtml += cell_html;
+        }
+        oCharCellWrapper.innerHTML = charWrapperHtml;
+      }
+
+      function getPosition (domArr, arr) {
+        for ( let i = 0,len = domArr.length; i < len; i ++ ){
+          arr[i] = {
+            index: i,
+            x: domArr[i].offsetLeft,
+            y: domArr[i].offsetTop
+          }
+        }
+        return arr;
+      }
+
+      function setResArr (ele,index) {
+        resCharArr[index] = {
+          ele : ele,
+          char: ele.innerText,
+          index: ele.dataset.index
+        }
+      }
+
+      function getResultChar (resCharArr){
+        return resCharArr.reduce((acc,curr)=>{
+          acc += curr.char;
+          return acc;
+        },'')
+      }
+
+      function resetCharArr (){
+        resCharArr.forEach(item=>{
+          animate(item.ele,{
+            left: charCellPosition[item.index].x,
+            top: charCellPosition[item.index].y
+          })
+        })
+      }
+
+      function checkRes (result, _arr) {
+        return _arr.includes(result);
+      }
+    })()
+
+    
+  </script>
+  
+</body>
+</html>

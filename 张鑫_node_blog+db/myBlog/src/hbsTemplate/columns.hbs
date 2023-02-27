@@ -1,0 +1,18 @@
+
+  <div class="blog-article--list">
+    <span class="weight">标签:</span>
+    {{#each list}}
+    <label for="{{_id}}">
+      <input type="radio" name="column" id="{{_id}}">{{name}}
+      <span class="delete-column" hidden>&#xf02b4;</span>
+    </label>
+    {{/each}}
+    <a class="addColumn weight"> 新建标签</a>
+  </div> 
+  <div class="blod-article--title">
+    <span class="weight">标题:</span>
+    <input class="title_input weight" type="text" spellcheck="false" name="title" id="title" placeholder="请输入文章标题">
+  </div>
+
+
+

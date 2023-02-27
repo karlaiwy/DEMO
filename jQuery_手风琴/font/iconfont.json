@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "28891590",
+      "name": "上一层20190729",
+      "font_class": "shangyiceng20190729",
+      "unicode": "e8c0",
+      "unicode_decimal": 59584
+    }
+  ]
+}

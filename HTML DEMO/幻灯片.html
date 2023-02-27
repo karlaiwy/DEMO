@@ -1,0 +1,85 @@
+<!--
+ * @Author: karl
+ * @Date: 2023-02-08 15:33:12
+ * @LastEditors: karl
+ * @LastEditTime: 2023-02-08 15:38:54
+ * @FilePath: /工具函数/case15.html
+-->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>幻灯片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 480px;
+      height: 320px;
+      margin: 50px auto;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+      background-size: cover;
+      background-position: center;
+      animation: loops 20s alternate infinite;
+    }
+
+    @keyframes loops {
+      0% {
+        background: url(images/4.jpg)
+      }
+
+      10% {
+        background: url(images/3.jpg)
+      }
+
+      20% {
+        background: url(images/re2.jpg);
+      }
+
+      30% {
+        background: url(images/2.jpg);
+      }
+
+      40% {
+        background: url(images/re3.jpg);
+      }
+
+      50% {
+        background: url(images/re4.jpg)
+      }
+
+      60% {
+        background: url(images/re5.jpg);
+      }
+
+      70% {
+        background: url(images/1.jpg)
+      }
+
+      80% {
+        background: url(images/re6.jpg);
+      }
+
+      90% {
+        background: url(images/p2.jpg);
+      }
+
+      100% {
+        background: url(images/re1.jpg)
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class='box'></div>
+</body>
+
+</html>

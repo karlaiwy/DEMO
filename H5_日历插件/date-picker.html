@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/reset-mobile.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/colors.min.css">
+  <link rel="stylesheet" href="css/date-picker.css">
+  <title>日历插件</title>
+</head>
+<body>
+  <input class="dp-input" type="text">
+
+  <div class="calender-page">
+    <div class="head">
+      <span class="weekend">日</span>
+      <span>一</span>
+      <span>二</span>
+      <span>三</span>
+      <span>四</span>
+      <span>五</span>
+      <span class="weekend">六</span>
+    </div>
+    <div class="month-data">
+
+    </div>
+    
+  </div>
+  <script src="js/zepto.min.js"></script>
+  <script src="js/template-web.js"></script>
+  <script src="js/PullDown.js"></script>
+  <script src="js/EasyDate.js"></script>
+  <script src="js/date-picker.js"></script>
+  <script type="text/template" id="date-picker">    
+      <div class="month-data-item" data-date = {{year}}-{{month}}>
+        <header > 
+          <h4>{{year}}年{{month}}月</h4>
+        </header>
+      
+      <ul class="list">
+        <li class='empty-{{empty}}'></li>
+        {{ each days}}
+        <li class='{{if $value.disabled}}disabled{{/if}} {{if $value.today}}today{{/if}} {{if $value.selected}}selected{{/if}}' data-date = {{$value.date}}></li>
+        {{ /each}}
+      </ul>
+      </div>    
+  </script>
+  <script>
+    let $calender_page = $('.calender-page');
+    let $input = $('.dp-input');
+    let $list = $('.month-data');
+
+    let datePicker = new DatePicker($input,$calender_page);
+  </script>
+</body>
+</html>

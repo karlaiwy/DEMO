@@ -1,0 +1,22 @@
+
+<div class="blog-modal--wrap">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close"><span class="modal-btn-close">&times;</span></button>
+      <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="input-group">
+        <label class="input-group-addon" id="basic-addon1">{{label}}</label>
+        <input type={{type}} name="column" class="form-control column_input" spellcheck="false"  placeholder="{{placeholder}}" aria-describedby="basic-addon1">
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      {{#each btns}}
+      <button type="button" class="modal-btn modal-btn-{{name}}" data-action="{{name}}">{{label}}</button>
+      {{/each}}
+    </div>
+  </div>
+</div>

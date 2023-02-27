@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1648172096727') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-quxiaoquanping:before {
+  content: "\eb10";
+}
+
+.icon-24gf-fullScreenEnter:before {
+  content: "\ea7d";
+}
+
+.icon-play-fill:before {
+  content: "\e72f";
+}
+
+.icon-stop-fill:before {
+  content: "\e738";
+}
+
+.icon-sound-Mute:before {
+  content: "\e766";
+}
+
+.icon-sound-filling:before {
+  content: "\e767";
+}
+
+.icon-voice:before {
+  content: "\e774";
+}
+
+.icon-exchangerate:before {
+  content: "\e772";
+}
+
+.icon-collection:before {
+  content: "\e79d";
+}
+
+.icon-collection-fill:before {
+  content: "\e79e";
+}
+
+.icon-comments:before {
+  content: "\e7b2";
+}
+

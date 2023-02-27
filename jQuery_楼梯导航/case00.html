@@ -1,0 +1,419 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-17 08:09:49
+ * @LastEditTime: 2022-04-18 13:28:46
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_jQuery_20220417/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>楼梯导航</title>
+  <script src="font/iconfont.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    body:nth-child(n) {
+      width: 980px;
+      margin: 10px auto;
+    }
+
+    p {
+      font-size: 24px;
+    }
+
+    h1 {
+      text-align: center;
+      line-height: 300px;
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+
+    .w980 {
+      width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    header,footer {
+      height: 300px;
+      background-color: #ccc;
+    }
+
+    section {
+      margin: 8px 0;
+      font-size: 48px;
+      color: #fff;
+      text-align: center;
+    }
+
+    section:nth-of-type(odd) {
+      height: 400px;
+      line-height: 400px;
+      background-color: rgb(92, 92, 224);
+    }
+
+    section:nth-of-type(even) {
+      height: 480px;
+      line-height: 480px;
+      background-color: rgb(224, 92, 184);
+    }
+
+    .slider ul {
+      box-sizing: border-box;
+      position: absolute;
+      top: 240px;
+      left: 50%;
+      margin-left: 510px;
+      padding: 5px 0;
+      box-shadow: 0 0 3px #222;
+      border-radius: 10px;
+    }
+
+    .slider>ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+    }
+
+    .slider li {
+      margin-top: 2px;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .slider li:hover {
+      background-color: rgb(77, 180, 236);
+    }
+
+    .slider li.active {
+      background-color: rgb(77, 180, 236);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>header</h1>
+  </header>
+  
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-duoseqiu"></use>
+    </svg>
+    动画
+  </p>
+  <section class="w980">动画1</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-feihang"></use>
+    </svg>
+    番剧
+  </p>
+  <section class="w980">番剧2</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-feichuan"></use>
+    </svg>
+    国创
+  </p>
+  <section class="w980">国创3</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-feihangqiu"></use>
+    </svg>
+    漫画
+  </p>
+  <section class="w980">漫画4</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-hengqiu"></use>
+    </svg>
+    音乐
+  </p>
+  <section class="w980">音乐5</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-duoseqiu"></use>
+    </svg>
+    舞蹈
+  </p>
+  <section class="w980">舞蹈6</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-huojian2"></use>
+    </svg>
+    游戏
+  </p>
+  <section class="w980">游戏7</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-huojian"></use>
+    </svg>
+    知识
+  </p>
+  <section class="w980">知识8</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-lanqiu"></use>
+    </svg>
+    科技
+  </p>
+  <section class="w980">科技9</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-qiu"></use>
+    </svg>
+    运动
+  </p>
+  <section class="w980">运动10</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-qiugan"></use>
+    </svg>
+    汽车
+  </p>
+  <section class="w980">汽车11</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-xinggui"></use>
+    </svg>
+    生活
+  </p>
+  <section class="w980">生活12</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-taikong"></use>
+    </svg>
+    美食
+  </p>
+  <section class="w980">美食13</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-xingqiu"></use>
+    </svg>
+    时尚
+  </p>
+  <section class="w980">时尚14</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-xingyue"></use>
+    </svg>
+    资讯
+  </p>
+  <section class="w980">资讯15</section>
+
+  <p>
+    <svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-yueqiu"></use>
+    </svg>
+    专栏
+  </p>
+  <section class="w980">专栏16</section>
+
+  <div class="slider">
+    <ul>
+      <li class="active">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-duoseqiu"></use>
+        </svg>
+        动画
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-feihang"></use>
+        </svg>
+        番剧
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-feichuan"></use>
+          </svg>
+          国创
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-feihangqiu"></use>
+          </svg>
+          漫画
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-hengqiu"></use>
+          </svg>
+          音乐
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-duoseqiu"></use>
+          </svg>
+          舞蹈
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-huojian2"></use>
+          </svg>
+          游戏
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-huojian"></use>
+          </svg>
+          知识
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-lanqiu"></use>
+          </svg>
+          科技
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-qiu"></use>
+          </svg>
+          运动
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-qiugan"></use>
+          </svg>
+          汽车
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xinggui"></use>
+          </svg>
+          生活
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-taikong"></use>
+          </svg>
+          美食
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xingqiu"></use>
+          </svg>
+          时尚
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-xingyue"></use>
+          </svg>
+          资讯
+      </li>
+      <li>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-yueqiu"></use>
+          </svg>
+          专栏
+      </li>
+    </ul>
+  </div>
+  <footer>
+    <h1>footer</h1>
+  </footer>
+
+  <script src="js/jquery.min.js"></script>
+  <script>
+    // 侧边栏模块
+    (function(){
+      $section = $('section');
+      $slider = $('.slider ul');
+      $li = $slider.children();
+      let idx = 0;
+
+      $(window).scroll(function(){
+        let scrollTop = $(this).scrollTop();
+        toFixed(scrollTop);
+        setSlideIdx(scrollTop);
+      });
+
+      $slider.on('click','li',function(){
+        idx = $(this).index();
+        
+        let top = $('section').eq(idx).offset().top - 100;
+        $('html').animate({
+          scrollTop: top
+        },function(){
+          $slider.find('li').eq(idx).addClass('active').siblings().removeClass('active');
+        });
+        
+      });
+
+      function setSlideIdx(scrollTop){
+        // 下一章
+        // 当 滚轮高度 大于 当前 section 的 中线时 idx++
+        if(scrollTop > $section.eq(idx).offset().top + $section.eq(idx).outerHeight(true) / 2){
+          idx++;
+        }
+
+        // 上一章
+        // 当  当前 section 的 顶部 大于 页面的中线时  idx—-
+        if($section.eq(idx).offset().top > (scrollTop + $(window).outerHeight() / 2)){
+          idx--;
+        }
+        idx = Math.max(0,Math.min($section.length - 1, idx));
+        console.log(idx);
+        $slider.find('li').eq(idx).addClass('active').siblings().removeClass('active');
+        
+      }
+
+      function toFixed(scrollTop){
+        if(scrollTop > 200){
+          $slider.css({
+            position: 'fixed',
+            top: '240px'
+          });
+          return false;
+        }
+        $slider.css({
+          position: 'absolute',
+          // boxShadow: ' 0 0 3px #222',
+          // borderRadius: '10px',
+          // padding: '5px 0',
+          top: '240px'
+        });
+      }
+    }())
+  </script>
+</body>
+</html>

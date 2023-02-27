@@ -1,0 +1,219 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-30 16:30:55
+ * @LastEditTime: 2022-02-17 09:38:21
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220130/case01.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 评论 </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      /* pointer-events: none; */  
+      /* 取消了默认事件 导致后期的事件无法触发 */
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .wrap {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin: 100px auto 0;
+      width: 400px;
+      height: 50px;
+      line-height: 50px;
+      background-color: #ccc;
+    }
+
+    .box {
+      display: flex;
+      width: 240px;
+      height: 40px;
+    }
+
+    .input {
+      width: 200px;
+      height: 40px;
+      font-size: 18px;
+      text-indent: 1em;
+      line-height: 40px;
+      border: 0;
+      background-color: #fff;
+    }
+
+    .btn {
+      width: 45px;
+      height: 40px;
+      color: #fff;
+      text-align: center;
+      line-height: 40px;
+      background-color: orange;
+      cursor: pointer;
+    }
+
+    .wrap>span {
+      width: 40px;
+      height: 40px;
+      font-size: 45px;
+      color: black;
+      text-align: center;
+      line-height: 32px;
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .increase {
+      display: flex;
+      align-items: center;
+      margin: 0 auto;
+      width: 400px;
+      line-height: 25px;
+      vertical-align: middle;
+      background-color: #fcfa;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .prompt {
+      position: fixed;
+      top: -50px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 400px;
+      height: 50px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 50px;
+      color: orange;
+      background-color: #fcfa;
+      border-radius: 5px;
+    }
+
+    .click {
+      display: none;
+      position: absolute;
+      top: -40px;
+      left: 10px;
+      color: #fadfaa;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="wrap">
+    <div class="click">点击切换头像</div>
+    <img src="img/p0.jpg" alt="pic" width='45' height='45'>
+    <div class="box">
+      <input class="input" type="text">
+      <span class="btn">发送</span>
+    </div>
+    <span class="add">+</span>
+    <span class="cut">-</span>
+  </div>
+
+  <div class="prompt">请输入评论内容</div>
+
+  <script src="js/common.js"></script>
+  <script>
+    var oWrap = $('.wrap');
+    var oBox = $('.click');
+    var oBtn = $('.btn');
+    var oAdd = $('.add');
+    var oCut = $('.cut');
+    var oInput = $('.input');
+    var oImg = $('img');
+    var oPrompt = $('.prompt');
+    var text = '';
+
+    var i = 0;
+
+    oInput.style.display = 'none';
+    oBtn.style.display = 'none';
+    oCut.style.display = 'none';
+
+    // moueseover/mouseout | mouseenter/mouseleave 都能生效
+    oImg.addEventListener('mouseenter',function(){
+      oBox.style.display = 'block';
+    },false);
+    oImg.addEventListener('mouseleave',function(){
+      oBox.style.display = 'none';
+    },false);
+
+    oImg.addEventListener('click',function(){
+      i++;
+      oImg.src = `img/p${i%8}.jpg`;
+    },false);
+
+    oAdd.addEventListener('click',function(){
+      oAdd.style.display = 'none';
+      oInput.style.display = 'block';
+      oBtn.style.display = 'block';
+      oCut.style.display = 'block';
+    },false);
+
+    oCut.addEventListener('click',function(){
+      oCut.style.display = 'none';
+      oInput.style.display = 'none';
+      oBtn.style.display = 'none';
+      oAdd.style.display = 'block';
+    },false);
+
+    oInput.addEventListener('input',function(e){
+      text = this.value;
+    },false)
+
+    oBtn.addEventListener('click',function(){
+      if(text.length === 0 || /^\s+$/.test(text)){
+        animate(oPrompt,{
+          top: '0px'
+        },function(){
+          var time = setTimeout(function(){
+            animate(oPrompt,{
+              top: '-50px'
+            },function(){
+              clearTimeout(time);
+            });
+          },1000);
+        });
+        return false;
+      }
+
+      var vDom = document.createElement('div');
+      var img = document.createElement('img');
+      img.src = oImg.src;
+      setStyle(img,{
+        width: '50px',
+        height: '50px',
+        borderRadius: '50%'
+      });
+      vDom.append(img);
+      vDom.append(text);
+      vDom.classList.add('increase');
+      document.body.append(vDom);
+      oInput.value = '';
+      text = '';
+    },false);
+
+  </script>
+</body>
+</html>

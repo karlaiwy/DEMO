@@ -1,0 +1,224 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-22 11:23:19
+ * @LastEditTime: 2022-02-17 17:33:11
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_js_20220122/case00.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播 立体</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      pointer-events: none;
+    }
+
+    .slider {
+      margin: 80px auto;
+      width: 800px;
+      height: 600px;
+    }
+
+    .list {
+      position: relative;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 500px;
+      height: 200px;
+    }
+    .list li {
+      position: absolute;
+      width: 500px;
+      height: 200px;
+      box-shadow: 0 0 12px #333;
+    }
+
+    .btn {
+      position: absolute;
+      top: 200px;
+      width: 800px;
+    }
+
+    .btn span {
+      z-index: 10;
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      line-height: 66px;
+      color: green;
+      font-size: 80px;
+      font-weight: 700;
+      background-color: rgba(148, 226, 220, 0.8);
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .btn span:hover {
+      background-color: rgba(148, 226, 220, 0.4);
+    }
+
+    .btn span.prev {
+      left: 0;
+    }
+    .btn span.next {
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="btn">
+      <span class="prev">&lt;</span>
+      <span class="next">&gt;</span>
+    </div>
+    <ul class="list">
+      <li><img src="img/1.jpg" alt="" width="100%" height="100%"></li>
+      <li><img src="img/2.jpg" alt="" width="100%" height="100%"></li>
+      <li><img src="img/3.jpg" alt="" width="100%" height="100%"></li>
+      <li><img src="img/4.jpg" alt="" width="100%" height="100%"></li>
+      <li><img src="img/5.jpg" alt="" width="100%" height="100%"></li>
+    </ul>
+  </div>
+  
+  <script src="js/common.js"></script>
+
+  <script>
+    var oList = $('.list');
+    var aLi = oList.children;
+    var oBtn = $('.btn');
+
+    var posData = [
+      {
+        zIndex: 0,
+        top: -40,
+        left: -130,
+        width: 250,
+        height: 100
+      },
+      {
+        zIndex: 1,
+        top: 35,
+        left: -190,
+        width: 360,
+        height: 134
+      },
+      {
+        zIndex: 2,
+        top: 95,
+        left: 0,
+        width: 500,
+        height: 200
+      },
+      {
+        zIndex: 1,
+        top: 35,
+        left: 340,
+        width: 360,
+        height: 134
+      },
+      {
+        zIndex: 0,
+        top: -40,
+        left: 385,
+        width: 250,
+        height: 100
+      }
+    ];
+
+    function format(arr){
+      return arr.map(function(item){
+        var temp = {};
+        for (var key in item){
+          if(key !== 'zIndex'){
+            item[key] += 'px';
+          }
+          temp[key] = item[key];
+        }
+        return temp;
+      });
+    }
+    posData = format(posData);
+
+    posTranslate();
+
+    function posTranslate(){
+      posData.forEach(function(item,idx){
+        animate(aLi[idx],item);
+      });
+    }
+
+    /*
+    push: 在最后面加
+    unshift:在最前面加
+    shift:从最前面删
+    pop:从最后面删
+    
+    */
+    var eventMap = {
+      'prev': function(e){
+        posData.push(posData.shift());
+      },
+      'next': function(e){
+        posData.unshift(posData.pop());
+      }
+    };
+
+    oBtn.addEventListener('mousedown',function(e){
+      if(e.target.tagName.toLowerCase() === 'span'){
+        if (eventMap[e.target.className] && typeof eventMap[e.target.className] === 'function'){
+          eventMap[e.target.className](e);
+          posTranslate();
+        }
+      }
+    },false);
+
+function animate(ele,styleList,callback){
+  clearInterval(ele.time);
+  var toggle = false;
+  ele.time = setInterval(function(){
+    toggle = true;
+    for(var key in styleList){
+      if(key === 'zIndex'){
+        ele.style[key] = styleList[key];
+        continue;
+      }
+      var target = parseInt(styleList[key]);
+      var curr = parseInt(getStyle(ele,[key])); 
+      var speed = (target - curr) / 10;
+      speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+      ele.style[key] = curr + speed + 'px';
+      if (curr === target){
+        ele.style[key] = styleList[key];
+      }
+      if (curr !== target){
+        toggle = false;
+      }
+    }
+    if (toggle){
+      clearInterval(ele.time);
+      callback && callback();
+    }
+  },1000/60); 
+}
+  </script>
+</body>
+</html>

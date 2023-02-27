@@ -1,0 +1,133 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-15 21:20:44
+ * @LastEditTime: 2022-04-16 20:15:47
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /张鑫_jQ_20220415/case03.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手风琴</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      user-select: none;
+      display: block;
+    }
+
+    .wrap {
+      overflow: hidden;
+      box-sizing: border-box;
+      margin: 50px auto;
+      width: 1089px;
+      height: 429px;
+      box-shadow: 0 0 5px #222;
+    }
+
+    .wrap ul{
+      width: 110%;
+      height: 100%;
+    }
+
+    .wrap ul li {
+      float: left;
+      position: relative;
+      width: 100px;
+    }
+
+    .wrap ul li p {
+      display: none;
+      box-sizing: border-box;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      padding: 10px 10px;
+      width: 40px;
+      background-color: rgba(16, 14, 14, 0.2);
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul>
+      <li>
+        <img src="images/1.jpg" width="789" height="429" alt="">
+        <p>这是图1的内容</p>
+      </li>
+      <li>
+        <img src="images/2.jpg" width="789" height="429" alt="">
+        <p>这是图2的内容</p>
+      </li>
+      <li>
+        <img src="images/3.jpg" width="789" height="429" alt="">
+        <p>这是图3的内容</p>
+      </li>
+      <li style="width: 789px;">
+        <img src="images/4.jpg" width="789" height="429" alt="">
+        <p>这是图4的内容</p>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <script>
+      $list = $('.wrap ul');
+      $p = $('p');
+      $p.css({
+        fontWeight:'700',
+        color: 'rgb(6, 145, 133)'
+      });
+
+      // $list.on('mouseenter',function(e){
+      //   console.log(e.target);
+      //   $p.css({
+      //     display: 'block'
+      //   }).animate({
+      //     top: '60px',
+      //     fontSize: '18px',
+      //     left: '25px'
+      //   });
+      // });
+
+      $list.children().on('mouseenter',function(){
+        $(this).stop(true).animate({
+          width: '789px'
+        }).siblings().stop(true).animate({
+          width: '100px'
+        });
+        $(this).find('p').css({
+          display: 'block'
+        }).animate({
+          top: '60px',
+          left: '25px'
+        });
+      })
+
+      $list.children().on('mouseout',function(){
+        $(this).find('p').stop(true).slideUp(500 ,function(){
+          $(this).css({
+              display: 'none',
+              top: '0px',
+              left: '0px'
+            })
+          });
+      })
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+
+<ul class="blog-count--wrap">
+  {{#each list}}
+  <li class="blog-count--item" data-column-id = {{_id}}>
+    <span class="fz30" data-column-id = {{_id}}>{{name}}</span>
+    <span class="fz18">文章数量:{{aids.length}}</span>
+  </li>
+  {{/each}}
+  <li class="blog-count--item" data-column-id='addColumn'>
+    <span class="fz60 addColumn" data-column-id='addColumn'></span>
+  </li>
+</ul>

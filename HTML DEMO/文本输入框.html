@@ -1,0 +1,109 @@
+<!--
+ * @Author: KARL
+ * @Date: 2022-09-03 13:12:33
+ * @LastEditors: KARL
+ * @LastEditTime: 2022-09-03 14:24:31
+ * @FilePath: /HTML DEMO/文本输入框.html
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by KARL, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 文本输入框 </title>
+  <style>
+    * {
+      user-select: none;
+    }
+    .wrap {
+      display: grid;
+      grid-template-columns: auto;
+      grid-gap: 40px;
+      margin: 100px auto;
+      padding: 60px 20px;
+      width: 400px;
+      /* height: 200px; */
+      border-radius: 4px;
+      box-shadow: 0 0 4px #222;
+    }
+
+    .form-item {
+      position: relative;
+      border-bottom: 1px solid rgb(100, 210, 220);
+    }
+
+    input {
+      width: 100%;
+      padding-bottom: 4px;
+      outline: none;
+      border: none;
+    }
+
+    input:focus {
+      color:rgb(4, 54, 58);
+      font-size: 16px;
+    }
+
+    input:focus {
+      color: rgb(4, 54, 58);
+    }
+
+    input:valid~label,
+    input:focus~label {
+      transform: translateY(-30px);
+      color:rgb(4, 54, 58);
+    }
+
+    input:focus~.bar {
+      width: 100%;
+      transition: .5s linear;
+      background-color: rgb(4, 54, 58);
+    }
+
+    label {
+      position: absolute;
+      top: -4px;
+      color:rgb(100, 210, 220);
+      font-size: 20px;
+      transition: .5s linear;
+    }
+
+    .bar {
+      position:  absolute;
+      bottom:  0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 20px;
+      height: 2px;
+    }
+
+    
+
+
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="form-item"> 
+      <input required type="text" class="user" id="username">
+      <label for="username">User Name</label>
+      <span class="bar"></span>
+    </div>
+
+    <div class="form-item">
+      
+      <input required type="text" class="pwd" id="password">
+      <label for="password">Password</label>
+      <span class="bar"></span>
+
+    </div>
+    
+  </div>
+</body>
+</html>
